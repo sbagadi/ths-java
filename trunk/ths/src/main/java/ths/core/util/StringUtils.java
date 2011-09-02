@@ -3,7 +3,7 @@ package ths.core.util;
 /**
  * 字符串处理的工具类
  */
-public class StringUtil {
+public class StringUtils {
 	/**
 	 * 检查字符串是否为<code>null</code>或空字符串<code>""</code>。
 	 * 
