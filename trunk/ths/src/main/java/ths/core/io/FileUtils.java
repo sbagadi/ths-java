@@ -1,12 +1,12 @@
 package ths.core.io;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.URL;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
+
+import ths.core.util.Constants;
 
 public class FileUtils {
 
@@ -74,17 +74,34 @@ public class FileUtils {
         }
     }
     
+    /**
+     * 得到一个按行读取文件的迭代器
+     * 
+     * @param file 要读取的文本文件
+     * @param encoding 文件字符编码
+     * @return {@link ths.core.io.LineIterator} 对象
+     * @throws IOException 文件不存在或系统不支持的字符编码
+     */
     public static LineIterator lineIterator(File file, String encoding) throws IOException {
-        InputStream in = null;
-        try {
-            in = new FileInputStream(file);
-            return IOUtils.lineIterator(in, encoding);
-        } catch (IOException ex) {
-            IOUtils.closeQuietly(in);
-            throw ex;
-        } catch (RuntimeException ex) {
-            IOUtils.closeQuietly(in);
-            throw ex;
+    	LineIterator reader = null;
+    	try {
+        	Charset charset = Charset.forName(encoding);
+        	reader = new LineIterator(file, charset);
+            return reader;
+        } catch (IOException e) {
+        	LineIterator.closeQuietly(reader);
+            throw e;
+        }
+    }
+    
+    public static LineIterator lineIterator(File file) throws IOException {
+    	LineIterator reader = null;
+    	try {
+        	reader = new LineIterator(file, Constants.UTF8);
+            return reader;
+        } catch (IOException e) {
+        	LineIterator.closeQuietly(reader);
+            throw e;
         }
     }    
 }

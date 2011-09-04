@@ -20,7 +20,7 @@ public class FileSystemUtilsTest {
 		String path = FileSystemUtils.getUserDirectoryPath();
 		System.out.println(path);
 	}
-	/*
+	
 	@Test
 	public void testCopy() {
 		boolean result = FileSystemUtils.copy(new File("c:/code.txt"), new File("C:/test"), "code_copy.txt", false);
@@ -28,11 +28,10 @@ public class FileSystemUtilsTest {
 	}
 	
 	@Test
-	public void testCopyDirectory() {
-		boolean result = FileSystemUtils.copyDirectory(new File("D:/temp/cankao/org.springframework.core-sources-3.0.6.RELEASE/org/springframework/core"), new File("C:/test"));
-		assertTrue(result);
+	public void testCopyDirectory() throws IOException {
+		FileSystemUtils.copyDirectory(new File("D:/temp/cankao/org.springframework.core-sources-3.0.6.RELEASE/org/springframework/core"), new File("C:/test"));
 	}
-	*/
+	
 	@Test
 	public void testCopyDirectorySub() throws IOException {
 		
