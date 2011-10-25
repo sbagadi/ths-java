@@ -6,12 +6,20 @@ import java.net.URL;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 
-import ths.core.util.Constants;
+import ths.core.lang.Constants;
 
 public class FileUtils {
 
 	public static String getFileType(File file) {
 		return "";
+	}
+	
+	public static String getReadableSize(long size) {
+		return DataSize.toReadable(size);
+	}
+	
+	public static String getReadableSize(File file) {
+		return DataSize.toReadable(file.length());
 	}
 	
 	/**
@@ -97,7 +105,7 @@ public class FileUtils {
     public static LineIterator lineIterator(File file) throws IOException {
     	LineIterator reader = null;
     	try {
-        	reader = new LineIterator(file, Constants.UTF8);
+        	reader = new LineIterator(file, Constants.DEFAULT_CHARSET_UTF8);
             return reader;
         } catch (IOException e) {
         	LineIterator.closeQuietly(reader);

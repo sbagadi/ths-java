@@ -23,7 +23,7 @@ public class FileSystemUtilsTest {
 	
 	@Test
 	public void testCopy() {
-		boolean result = FileSystemUtils.copy(new File("c:/code.txt"), new File("C:/test"), "code_copy.txt", false);
+		boolean result = FileSystemUtils.copyFile(new File("c:/code.txt"), new File("C:/test"), "code_copy.txt", false);
 		assertTrue(result);
 	}
 	

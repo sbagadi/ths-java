@@ -1,5 +1,7 @@
 package ths.core.io;
 
+import static ths.core.lang.Assert.*;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -52,7 +54,7 @@ public class LineIterator implements Iterator<String> {
 
 	@Override
 	public void remove() {
-		throw new UnsupportedOperationException("Remove unsupported on LineIterator");
+		unsupportedOperation("Remove unsupported on LineIterator");
 	}
 
 	public void close() {
