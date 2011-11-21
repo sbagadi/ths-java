@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="3.0" 
+	xmlns="http://java.sun.com/xml/ns/javaee" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+	http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
+
+	<listener>
+		<listener-class>ths.web.listener.LogConfiguratorListener</listener-class>
+	</listener>
+	<listener>
+		<listener-class>ths.web.listener.ServicesContextLoaderListener</listener-class>
+	</listener>
+	
+    <filter>
+        <filter-name>LogDispatcherFilter</filter-name>
+        <filter-class>ths.web.filter.dispatcher.LogDispatcherFilter</filter-class>
+    </filter>
+    <filter>
+        <filter-name>ActionDispatcherFilter</filter-name>
+        <filter-class>ths.web.filter.dispatcher.ActionDispatcherFilter</filter-class>
+    </filter>
+    <filter>
+        <filter-name>GraphicsDispatcherFilter</filter-name>
+        <filter-class>ths.web.filter.dispatcher.GraphicsDispatcherFilter</filter-class>
+    </filter>
+    
+    <filter-mapping>
+        <filter-name>LogDispatcherFilter</filter-name>
+        <url-pattern>*.*</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>ActionDispatcherFilter</filter-name>
+        <url-pattern>*.htm</url-pattern>
+    </filter-mapping>
+    <filter-mapping>
+        <filter-name>GraphicsDispatcherFilter</filter-name>
+        <url-pattern>*.cgf</url-pattern>
+    </filter-mapping>	
+	
+	<welcome-file-list>
+	  <welcome-file>index.jsp</welcome-file>
+	  <welcome-file>index.html</welcome-file>
+	</welcome-file-list>
+</web-app>
