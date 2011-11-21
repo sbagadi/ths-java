@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:services="http://www.99buy.com.cn/schema/services"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd 
+		http://www.99buy.com.cn/schema/services http://www.99buy.com.cn/schema/services.xsd
+	">
+	
+	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+    	<property name="location">
+    		<value>/WEB-INF/global.properties</value>
+		</property>
+	</bean>
+	
+	<services:checker type="hibernate3" name="Tom" age="28" xmlns="http://www.99buy.com.cn/schema/services">
+		<include method="GET" />
+		<include method="POST" />
+	</services:checker>
+	
+</beans>

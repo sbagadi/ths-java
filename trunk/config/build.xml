@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="AntTest" basedir="." default="package">
+	
+	<property name="compile" value="compile"></property>
+	<property name="dist" value="dist"></property>
+	<property name="ths-path" value="E:/code/site/mall/WebRoot/WEB-INF/lib"></property>
+	
+	<target name="init"></target>
+	
+	<target name="preprocess" depends="init">
+		<!--<mkdir dir="${compile}"/>-->
+		<!--<mkdir dir="${dist}"/>-->
+		<delete file="${ths-path}/ths-${DSTAMP}.jar"></delete>
+	</target>
+	
+	<target name="compile" depends="init,preprocess">
+		<javac srcdir="src" destdir="${compile}"></javac>
+	</target>
+	
+	<target name="package" depends="init,preprocess">
+		<tstamp></tstamp>
+		<jar destfile="${ths-path}/ths-${DSTAMP}.jar" basedir="bin" includes="*/**/*.*">
+			<manifest>
+				<attribute name="Built-By" value="${user.name}"/>
+				<!--<attribute name="Main-Class" value="com.test.image.Test"/>-->
+			</manifest>
+		</jar>
+		<!--<copy file="${dist}/ths-${DSTAMP}.jar" todir="E:\workspaces\Ant\build"></copy>-->
+		
+		<!--<delete dir="${compile}"></delete>-->
+		<!--<delete dir="${dist}"></delete>-->
+	</target>
+</project>

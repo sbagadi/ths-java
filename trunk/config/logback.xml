@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Context>
+<configuration>
+  <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+    <layout class="ch.qos.logback.classic.PatternLayout">
+      <pattern>%-5level %logger{80} %file:%line - %m%n</pattern>
+    </layout>
+  </appender>
+  
+  <appender name="FILE_INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>C:\\logs\\ths-runtime.log</file>
+    <encoding>UTF-8</encoding>
+    <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>ths-runtime.%d{yyyy-MM-dd}.log.zip</fileNamePattern>
+    </rollingPolicy>
+    <layout class="ch.qos.logback.classic.PatternLayout">
+      <pattern><![CDATA[%-5level %logger{35} %file:%line - %m%n]]></pattern>
+    </layout>
+  </appender>
+
+  <root level="DEBUG">
+    <appender-ref ref="stdout" />
+  </root>
+</configuration>
