@@ -24,6 +24,22 @@ public class StringUtils {
     public StringUtils() {
         super();
     }
+    
+    // Add by ths
+	/**
+	 * 替换字符串中所有非数字字符
+	 * 
+	 * @param str
+	 *            要替换的字符串
+	 * @return 返回替换后的字符串
+	 */
+	public static String removeNonDigits(String str) {
+		if (str == null) {
+			return null;
+		}
+
+		return str.replaceAll("[^\\d]", "");
+	}    
 
     // Empty checks
     //-----------------------------------------------------------------------

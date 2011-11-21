@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:beans="http://www.springframework.org/schema/beans" 
+	xmlns:ths="http://www.99buy.com.cn/schema/ths/base" 
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+	elementFormDefault="qualified">
+
+	<xsd:import namespace="http://www.springframework.org/schema/beans" />
+	<xsd:import namespace="http://www.99buy.com.cn/schema/ths/base" />
+	
+	<xsd:element name="checker" type="CheckerServiceType">
+		<xsd:annotation>
+			<xsd:documentation><![CDATA[网站验证服务]]></xsd:documentation>
+		</xsd:annotation>	
+	</xsd:element>
+	
+	<xsd:complexType name="CheckerServiceType">		
+	    <xsd:sequence>
+	      <xsd:element name="include" type="includeCheckerServiceType" minOccurs="0" maxOccurs="unbounded"/>
+	      <xsd:element name="exclude" type="excludeCheckerServiceType" minOccurs="0" maxOccurs="unbounded"/>
+	    </xsd:sequence>
+	    
+	    <xsd:attribute name="type" use="required"  >
+	      <xsd:simpleType>
+	        <xsd:union >
+	          <xsd:simpleType>
+	            <xsd:restriction  base="xsd:string">
+	              <xsd:enumeration value="array"/>
+	              <xsd:enumeration value="bean"/>
+	              <xsd:enumeration value="collection"/>
+	              <xsd:enumeration value="map"/>
+	              <xsd:enumeration value="enum"/>
+	              <xsd:enumeration value="hibernate2"/>
+	              <xsd:enumeration value="hibernate3"/>
+	              <xsd:enumeration value="exception"/>
+	              <xsd:enumeration value="object"/>
+	            </xsd:restriction>  
+	          </xsd:simpleType>
+	          <xsd:simpleType>
+	            <xsd:restriction base="xsd:IDREF" />
+	          </xsd:simpleType>
+	        </xsd:union>  
+	      </xsd:simpleType>
+	    </xsd:attribute>
+	    
+		<xsd:attribute name="name" type="xsd:string"/>
+		<xsd:attribute name="age" type="xsd:int"/>	    	
+	</xsd:complexType>
+    
+  <xsd:complexType name="includeCheckerServiceType">
+    <xsd:attribute name="method" type="xsd:string" use="required"/>
+  </xsd:complexType>
+
+  <xsd:complexType name="excludeCheckerServiceType">
+    <xsd:attribute name="method" type="xsd:string" use="required"/>
+  </xsd:complexType>    
+    
+</xsd:schema>

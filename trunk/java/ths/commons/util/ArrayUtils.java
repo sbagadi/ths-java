@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 
-import ths.core.lang.mutable.MutableInt;
+import ths.commons.lang.mutable.MutableInt;
 
 public class ArrayUtils {
 
