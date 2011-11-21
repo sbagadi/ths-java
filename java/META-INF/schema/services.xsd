@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema targetNamespace="http://www.99buy.com.cn/schema/services"
+	xmlns="http://www.99buy.com.cn/schema/services"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+	elementFormDefault="qualified">
+	
+	<xsd:include schemaLocation="http://www.99buy.com.cn/schema/services/checker.xsd"></xsd:include>
+
+</xsd:schema>

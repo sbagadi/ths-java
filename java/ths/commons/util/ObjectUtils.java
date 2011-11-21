@@ -1,11 +1,99 @@
 package ths.commons.util;
 
+import static ths.commons.lang.Assert.*;
+
+import java.io.IOException;
+import java.util.Arrays;
+
 public class ObjectUtils {
 	
     public ObjectUtils() {
         super();
     }
     
+    // ==========================================================================
+    // 判空函数。 
+    // ==========================================================================
+
+    /**
+     * 是否为<code>null</code>、空字符串、或空数组。
+     */
+    public static boolean isEmptyObject(Object object) {
+        if (object == null) {
+            return true;
+        } else if (object instanceof String) {
+            return StringUtils.isEmpty((String) object);
+        } else if (object.getClass().isArray()) {
+            return ArrayUtils.isEmpty((Object[])object);
+        } else {
+            return false;
+        }
+    }
+
+    // ==========================================================================
+    // 比较函数。 
+    //
+    // 以下方法用来比较两个对象的值或类型是否相同。
+    // ==========================================================================
+
+    /**
+     * 比较两个对象是否完全相等。
+     * <p>
+     * 此方法可以正确地比较多维数组。
+     * 
+     * <pre>
+     * ObjectUtil.equals(null, null)                  = true
+     * ObjectUtil.equals(null, "")                    = false
+     * ObjectUtil.equals("", null)                    = false
+     * ObjectUtil.equals("", "")                      = true
+     * ObjectUtil.equals(Boolean.TRUE, null)          = false
+     * ObjectUtil.equals(Boolean.TRUE, "true")        = false
+     * ObjectUtil.equals(Boolean.TRUE, Boolean.TRUE)  = true
+     * ObjectUtil.equals(Boolean.TRUE, Boolean.FALSE) = false
+     * </pre>
+     * 
+     * </p>
+     * 
+     * @param object1 对象1
+     * @param object2 对象2
+     * @return 如果相等, 则返回<code>true</code>
+     */
+    public static boolean isEquals(Object object1, Object object2) {
+        if (object1 == object2) {
+            return true;
+        }
+
+        if (object1 == null || object2 == null) {
+            return false;
+        }
+
+        if (!object1.getClass().equals(object2.getClass())) {
+            return false;
+        }
+
+        if (object1 instanceof Object[]) {
+            return Arrays.deepEquals((Object[]) object1, (Object[]) object2);
+        } else if (object1 instanceof int[]) {
+            return Arrays.equals((int[]) object1, (int[]) object2);
+        } else if (object1 instanceof long[]) {
+            return Arrays.equals((long[]) object1, (long[]) object2);
+        } else if (object1 instanceof short[]) {
+            return Arrays.equals((short[]) object1, (short[]) object2);
+        } else if (object1 instanceof byte[]) {
+            return Arrays.equals((byte[]) object1, (byte[]) object2);
+        } else if (object1 instanceof double[]) {
+            return Arrays.equals((double[]) object1, (double[]) object2);
+        } else if (object1 instanceof float[]) {
+            return Arrays.equals((float[]) object1, (float[]) object2);
+        } else if (object1 instanceof char[]) {
+            return Arrays.equals((char[]) object1, (char[]) object2);
+        } else if (object1 instanceof boolean[]) {
+            return Arrays.equals((boolean[]) object1, (boolean[]) object2);
+        } else {
+            return object1.equals(object2);
+        }
+    }
+
     /**
      * 检查两个对象是否属于相同类型。<code>null</code>将被看作任意类型。
      * 
@@ -19,6 +107,81 @@ public class ObjectUtils {
         }
 
         return object1.getClass().equals(object2.getClass());
+    }
+
+    // ==========================================================================
+    // 取得对象的identity。 
+    // ==========================================================================
+
+    /**
+     * 取得对象的原始的hash值, 如果对象为<code>null</code>, 则返回<code>0</code>。
+     * <p>
+     * 该方法使用<code>System.identityHashCode</code>来取得hash值，该值不受对象本身的
+     * <code>hashCode</code>方法的影响。
+     * </p>
+     * 
+     * @param object 对象
+     * @return hash值
+     */
+    public static int identityHashCode(Object object) {
+        return object == null ? 0 : System.identityHashCode(object);
+    }
+
+    /**
+     * 取得对象自身的identity，如同对象没有覆盖<code>toString()</code>方法时，
+     * <code>Object.toString()</code>的原始输出。
+     * 
+     * <pre>
+     * ObjectUtil.identityToString(null, "NULL")            = "NULL"
+     * ObjectUtil.identityToString("", "NULL")              = "java.lang.String@1e23"
+     * ObjectUtil.identityToString(Boolean.TRUE, "NULL")    = "java.lang.Boolean@7fa"
+     * ObjectUtil.identityToString(new int[0], "NULL")      = "int[]@7fa"
+     * ObjectUtil.identityToString(new Object[0], "NULL")   = "java.lang.Object[]@7fa"
+     * </pre>
+     * 
+     * @param object 对象
+     * @param nullStr 如果对象为<code>null</code>，则返回该字符串
+     * @return 对象的identity，如果对象是<code>null</code>，则返回指定字符串
+     */
+    public static String identityToString(Object object, String nullStr) {
+        if (object == null) {
+            return nullStr;
+        }
+
+        return appendIdentityToString(new StringBuilder(), object).toString();
+    }
+
+    /**
+     * 将对象自身的identity——如同对象没有覆盖<code>toString()</code>方法时，
+     * <code>Object.toString()</code>的原始输出——追加到<code>Appendable</code>中。
+     * 
+     * <pre>
+     * ObjectUtil.appendIdentityToString(buf, null)          = null
+     * ObjectUtil.appendIdentityToString(buf, Boolean.TRUE)  = buf.append("java.lang.Boolean@7fa")
+     * ObjectUtil.appendIdentityToString(buf, new int[0])    = buf.append("int[]@7fa")
+     * ObjectUtil.appendIdentityToString(buf, new Object[0]) = buf.append("java.lang.Object[]@7fa")
+     * </pre>
+     * 
+     * @param buffer <code>Appendable</code>对象
+     * @param object 对象
+     * @return <code>Appendable</code>对象，如果对象为<code>null</code>，则输出
+     *         <code>"null"</code>
+     */
+    public static <A extends Appendable> A appendIdentityToString(A buffer, Object object) {
+        assertNotNull(buffer, "appendable");
+
+        try {
+            if (object == null) {
+                buffer.append("null");
+            } else {
+                buffer.append(ClassUtils.getFriendlyClassNameForObject(object));
+                buffer.append('@').append(Integer.toHexString(identityHashCode(object)));
+            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return buffer;
     }
     
     // Defaulting
