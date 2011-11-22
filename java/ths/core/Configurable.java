@@ -1,7 +1,8 @@
 package ths.core;
 
-import java.util.Map;
+import ths.core.exception.ConfigurationException;
 
 public interface Configurable {
-	void configure(Map<String, String> config);
+	
+	void configure(Configuration config) throws ConfigurationException;
 }
