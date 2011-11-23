@@ -1,5 +1,12 @@
 package ths.template.support;
 
+/**
+ * Cache. (SPI, Singleton, ThreadSafe)
+ * 
+ * @see com.googlecode.httl.Engine#setCache(Cache)
+ * 
+ * @author Liang Fei (liangfei0201 AT gmail DOT com)
+ */
 public interface Cache {
     
     /**

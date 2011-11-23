@@ -1,5 +1,12 @@
 package ths.template.support;
 
+/**
+ * Filter. (SPI, Singleton, ThreadSafe)
+ * 
+ * @see com.googlecode.httl.Engine#setFilter(Filter)
+ * 
+ * @author Liang Fei (liangfei0201 AT gmail DOT com)
+ */
 public interface Filter {
     
     /**

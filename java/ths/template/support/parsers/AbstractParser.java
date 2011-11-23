@@ -1,20 +1,4 @@
-/*
- *  Licensed to the Apache Software Foundation (ASF) under one or more
- *  contributor license agreements.  See the NOTICE file distributed with
- *  this work for additional information regarding copyright ownership.
- *  The ASF licenses this file to You under the Apache License, Version 2.0
- *  (the "License"); you may not use this file except in compliance with
- *  the License.  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- */
-package com.googlecode.httl.support.parsers;
+package ths.template.support.parsers;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -34,26 +18,25 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.googlecode.httl.Configurable;
-import com.googlecode.httl.Engine;
-import com.googlecode.httl.Expression;
-import com.googlecode.httl.Resource;
-import com.googlecode.httl.Template;
-import com.googlecode.httl.support.Compiler;
-import com.googlecode.httl.support.EngineAware;
-import com.googlecode.httl.support.Filter;
-import com.googlecode.httl.support.Parser;
-import com.googlecode.httl.support.Translator;
-import com.googlecode.httl.support.runtime.AbstractTemplate;
-import com.googlecode.httl.support.runtime.ForeachStatus;
-import com.googlecode.httl.support.runtime.OrderedTypeMap;
-import com.googlecode.httl.support.runtime.OutputStreamTemplate;
-import com.googlecode.httl.support.runtime.WriterTemplate;
-import com.googlecode.httl.support.util.ClassUtils;
-import com.googlecode.httl.support.util.IOUtils;
-import com.googlecode.httl.support.util.StringUtils;
-import com.googlecode.httl.support.util.UnsafeByteArrayOutputStream;
-import com.googlecode.httl.support.util.UnsafeStringWriter;
+import ths.core.Resource;
+import ths.template.Engine;
+import ths.template.Template;
+import ths.template.Expression;
+import ths.template.support.Compiler;
+import ths.template.support.EngineAware;
+import ths.template.support.Filter;
+import ths.template.support.Parser;
+import ths.template.support.Translator;
+import ths.template.support.runtime.AbstractTemplate;
+import ths.template.support.runtime.ForeachStatus;
+import ths.template.support.runtime.OrderedTypeMap;
+import ths.template.support.runtime.OutputStreamTemplate;
+import ths.template.support.runtime.WriterTemplate;
+import ths.template.util.ClassUtils;
+import ths.template.util.IOUtils;
+import ths.template.util.StringUtils;
+import ths.template.util.UnsafeByteArrayOutputStream;
+import ths.template.util.UnsafeStringWriter;
 
 /**
  * AbstractParser. (SPI, Singleton, ThreadSafe)
@@ -62,7 +45,7 @@ import com.googlecode.httl.support.util.UnsafeStringWriter;
  * 
  * @author Liang Fei (liangfei0201 AT gmail DOT com)
  */
-public abstract class AbstractParser implements Parser, Configurable, EngineAware {
+public abstract class AbstractParser implements Parser, EngineAware {
     
     protected static final char SPECIAL = '\27';
 
@@ -157,7 +140,7 @@ public abstract class AbstractParser implements Parser, Configurable, EngineAwar
     public void setEngine(Engine engine) {
         this.engine = engine;
     }
-
+    /*
     public void configure(Map<String, String> config) {
         String output = config.get(OUTPUT_STREAM);
         if (output != null && output.trim().length() > 0) {
@@ -190,7 +173,7 @@ public abstract class AbstractParser implements Parser, Configurable, EngineAwar
             importPackages = packages.trim().split("\\s*\\,\\s*");
             importPackageSet = new HashSet<String>(Arrays.asList(importPackages));
         }
-    }
+    }*/
     
     protected abstract String doParse(String name, String source, Translator resolver, 
                                       List<String> parameters, List<Class<?>> parameterTypes, 

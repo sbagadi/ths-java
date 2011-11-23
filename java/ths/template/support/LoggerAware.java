@@ -1,5 +1,10 @@
 package ths.template.support;
 
+/**
+ * LoggerAware
+ * 
+ * @author Liang Fei (liangfei0201 AT gmail DOT com)
+ */
 public interface LoggerAware {
     
     /**

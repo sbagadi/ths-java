@@ -2,11 +2,16 @@ package ths.template.support.caches;
 
 import java.util.Map;
 
-import com.googlecode.httl.Configurable;
 import ths.template.support.Cache;
 
-
-public class AdaptiveCache implements Cache, Configurable {
+/**
+ * AdaptiveCache. (SPI, Singleton, ThreadSafe)
+ * 
+ * @see com.googlecode.httl.Engine#setCache(Cache)
+ * 
+ * @author Liang Fei (liangfei0201 AT gmail DOT com)
+ */
+public class AdaptiveCache implements Cache {
     
     private Cache cache;
     

@@ -1,4 +1,4 @@
-package ths.template.base;
+package ths.template;
 
 import java.io.Writer;
 import java.util.Map;

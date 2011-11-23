@@ -1,4 +1,4 @@
-package ths.template.base;
+package ths.template;
 
 /**
  * Constants. (SPI, Static, ThreadSafe)

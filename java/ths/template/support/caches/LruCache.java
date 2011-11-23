@@ -6,11 +6,17 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.atomic.AtomicInteger;
 
-import com.googlecode.httl.Configurable;
 import ths.template.support.Cache;
 import ths.template.util.ConfigUtils;
 
-public class LruCache extends MapCache implements Configurable {
+/**
+ * LruCache. (SPI, Singleton, ThreadSafe)
+ * 
+ * @see com.googlecode.httl.Engine#setCache(Cache)
+ * 
+ * @author Liang Fei (liangfei0201 AT gmail DOT com)
+ */
+public class LruCache extends MapCache {
     
     private static final int DEFAULT_CAPACITY = 1000;
     
@@ -53,7 +59,7 @@ public class LruCache extends MapCache implements Configurable {
     public void setCapacity(int capacity) {
         this.capacity.set(capacity);
     }
-
+    
     public void configure(Map<String, String> config) {
         String capacity = config.get(CACHE_CAPACITY);
         if (capacity != null && ConfigUtils.isInteger(capacity.trim())) {

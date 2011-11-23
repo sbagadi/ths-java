@@ -15,27 +15,28 @@ import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.locks.ReentrantLock;
 
-import ths.core.Configurable;
+import ths.core.Resource;
+import ths.core.Loader;
+import ths.core.loaders.StringLoader;
 
-import com.googlecode.httl.support.Cache;
-import com.googlecode.httl.support.Compiler;
-import com.googlecode.httl.support.EngineAware;
-import com.googlecode.httl.support.Filter;
-import com.googlecode.httl.support.Formatter;
-import com.googlecode.httl.support.Loader;
-import com.googlecode.httl.support.Logger;
-import com.googlecode.httl.support.LoggerAware;
-import com.googlecode.httl.support.Parser;
-import com.googlecode.httl.support.Translator;
-import com.googlecode.httl.support.loaders.StringLoader;
-import com.googlecode.httl.support.loggers.LoggerUtils;
-import com.googlecode.httl.support.sequences.StringSequence;
-import com.googlecode.httl.support.util.ClassUtils;
-import com.googlecode.httl.support.util.ConfigUtils;
-import com.googlecode.httl.support.util.StringUtils;
-import com.googlecode.httl.support.util.UrlUtils;
+import ths.template.support.Cache;
+import ths.template.support.Compiler;
+import ths.template.support.EngineAware;
+import ths.template.support.Filter;
+import ths.template.support.Formatter;
+import ths.template.support.Logger;
+import ths.template.support.loggers.LoggerUtils;
+import ths.template.support.LoggerAware;
+import ths.template.support.Parser;
+import ths.template.support.Translator;
 
-public class Engine implements Configurable {
+import ths.template.support.sequences.StringSequence;
+import ths.template.util.ClassUtils;
+import ths.template.util.ConfigUtils;
+import ths.template.util.StringUtils;
+import ths.template.util.UrlUtils;
+
+public class Engine {
     
     /**
      * Default config path.
