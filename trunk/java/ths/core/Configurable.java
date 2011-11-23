@@ -1,8 +1,6 @@
 package ths.core;
 
-import ths.core.exception.ConfigurationException;
-
-public interface Configurable {
+public interface Configurable<T extends Configuration> {
 	
-	void configure(Configuration config) throws ConfigurationException;
+	void configure(T config);
 }

@@ -2,10 +2,11 @@ package ths.template.support.caches;
 
 import java.util.Collections;
 import java.util.LinkedHashMap;
-import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.atomic.AtomicInteger;
 
+import ths.core.Configurable;
+import ths.template.TemplateConfiguration;
 import ths.template.support.Cache;
 import ths.template.util.ConfigUtils;
 
@@ -16,7 +17,7 @@ import ths.template.util.ConfigUtils;
  * 
  * @author Liang Fei (liangfei0201 AT gmail DOT com)
  */
-public class LruCache extends MapCache {
+public class LruCache extends MapCache implements Configurable<TemplateConfiguration> {
     
     private static final int DEFAULT_CAPACITY = 1000;
     
@@ -59,9 +60,11 @@ public class LruCache extends MapCache {
     public void setCapacity(int capacity) {
         this.capacity.set(capacity);
     }
-    
-    public void configure(Map<String, String> config) {
-        String capacity = config.get(CACHE_CAPACITY);
+
+    @Override
+    public void configure(TemplateConfiguration config) {
+        String capacity = config.getCacheCapacity();
+        
         if (capacity != null && ConfigUtils.isInteger(capacity.trim())) {
             this.capacity.set(Integer.parseInt(capacity.trim()));
         }

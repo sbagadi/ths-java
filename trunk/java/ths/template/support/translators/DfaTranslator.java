@@ -4,9 +4,10 @@ import java.text.ParseException;
 import java.util.Collection;
 import java.util.Map;
 
+import ths.core.Configurable;
 import ths.template.Engine;
 import ths.template.Expression;
-import ths.template.base.TemplateConfigurable;
+import ths.template.TemplateConfiguration;
 import ths.template.support.EngineAware;
 import ths.template.support.Translator;
 import ths.template.support.translators.expression.ExpressionImpl;
@@ -21,7 +22,7 @@ import ths.template.util.StringUtils;
  * 
  * @author Liang Fei (liangfei0201 AT gmail DOT com)
  */
-public class DfaTranslator implements Translator, EngineAware {
+public class DfaTranslator implements Translator, Configurable<TemplateConfiguration>, EngineAware {
     
     private Engine engine;
 
@@ -31,7 +32,8 @@ public class DfaTranslator implements Translator, EngineAware {
         this.engine = engine;
     }
     
-    public void configure(TemplateConfigurable config) {
+    @Override
+    public void configure(TemplateConfiguration config) {
         String packages = config.getImportPackages(); 
         this.importPackages = packages.trim().split("\\s*\\,\\s*");
     }

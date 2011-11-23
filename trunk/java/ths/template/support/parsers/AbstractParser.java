@@ -19,6 +19,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import ths.core.Resource;
+import ths.core.Configurable;
+import ths.template.TemplateConfiguration;
 import ths.template.Engine;
 import ths.template.Template;
 import ths.template.Expression;
@@ -45,7 +47,7 @@ import ths.template.util.UnsafeStringWriter;
  * 
  * @author Liang Fei (liangfei0201 AT gmail DOT com)
  */
-public abstract class AbstractParser implements Parser, EngineAware {
+public abstract class AbstractParser implements Parser, Configurable<TemplateConfiguration>, EngineAware {
     
     protected static final char SPECIAL = '\27';
 
@@ -140,13 +142,20 @@ public abstract class AbstractParser implements Parser, EngineAware {
     public void setEngine(Engine engine) {
         this.engine = engine;
     }
-    /*
-    public void configure(Map<String, String> config) {
-        String output = config.get(OUTPUT_STREAM);
+    
+    @Override
+    public void configure(TemplateConfiguration config) {
+   
+        String output = config.getOutputStream();
+        String namespace = config.getAttributeNamespace();
+        String status = config.getForeachStatus();
+        String packages = config.getImportPackages();
+        version = config.getJavaVersion();
+        
         if (output != null && output.trim().length() > 0) {
             isOutput = "true".equalsIgnoreCase(output);
         }
-        String namespace = config.get(ATTRIBUTE_NAMESPACE);
+        
         if (namespace != null && namespace.trim().length() > 0) {
             namespace = namespace.trim() + ":";
             ifName = namespace + IF;
@@ -159,21 +168,21 @@ public abstract class AbstractParser implements Parser, EngineAware {
             blockName = namespace + BLOCK;
             macroName = namespace + MACRO;
         }
-        String status = config.get(FOREACH_STATUS);
+        
         if (status != null && status.trim().length() > 0 
                 && StringUtils.isNamed(status.trim())) {
             foreachStatus = status.trim();
         }
-        version = config.get(JAVA_VERSION);
+        
         if (version != null) {
             version = version.trim();
         }
-        String packages = config.get(IMPORT_PACKAGES);
+        
         if (packages != null && packages.trim().length() > 0) {
             importPackages = packages.trim().split("\\s*\\,\\s*");
             importPackageSet = new HashSet<String>(Arrays.asList(importPackages));
         }
-    }*/
+    }
     
     protected abstract String doParse(String name, String source, Translator resolver, 
                                       List<String> parameters, List<Class<?>> parameterTypes, 

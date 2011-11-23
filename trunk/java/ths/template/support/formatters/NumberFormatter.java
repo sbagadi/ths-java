@@ -2,8 +2,9 @@ package ths.template.support.formatters;
 
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
-import java.util.Map;
 
+import ths.core.Configurable;
+import ths.template.TemplateConfiguration;
 import ths.template.support.Formatter;
 
 /**
@@ -13,17 +14,16 @@ import ths.template.support.Formatter;
  * 
  * @author Liang Fei (liangfei0201 AT gmail DOT com)
  */
-public class NumberFormatter implements Formatter<Number> {
+public class NumberFormatter implements Formatter<Number>, Configurable<TemplateConfiguration> {
     
     private String numberFormat;
     
-    public void configure(Map<String, String> config) {
-        String format = config.get(NUMBER_FORMAT);
-        if (format != null && format.trim().length() > 0) {
-            format = format.trim();
-            new DecimalFormat(format).format(0);
-            this.numberFormat = format;
-        }
+    @Override
+    public void configure(TemplateConfiguration config) {
+        String format = config.getNumberFormat();
+        
+        new DecimalFormat(format).format(0);
+        this.numberFormat = format;
     }
     
     public String format(Number value) {

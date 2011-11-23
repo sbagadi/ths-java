@@ -2,8 +2,9 @@ package ths.template.support.formatters;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Map;
 
+import ths.core.Configurable;
+import ths.template.TemplateConfiguration;
 import ths.template.support.Formatter;
 import ths.template.util.DateUtils;
 
@@ -14,12 +15,13 @@ import ths.template.util.DateUtils;
  * 
  * @author Liang Fei (liangfei0201 AT gmail DOT com)
  */
-public class DateFormatter implements Formatter<Date> {
+public class DateFormatter implements Formatter<Date>, Configurable<TemplateConfiguration> {
     
     private String dateFormat;
     
-    public void configure(Map<String, String> config) {
-        String format = config.get(DATE_FORMAT);
+    @Override
+    public void configure(TemplateConfiguration config) {
+        String format = config.getDateFormat();
         if (format != null && format.trim().length() > 0) {
             format = format.trim();
             new SimpleDateFormat(format).format(new Date());

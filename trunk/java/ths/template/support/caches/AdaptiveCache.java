@@ -1,7 +1,7 @@
 package ths.template.support.caches;
 
-import java.util.Map;
-
+import ths.core.Configurable;
+import ths.template.TemplateConfiguration;
 import ths.template.support.Cache;
 
 /**
@@ -11,19 +11,22 @@ import ths.template.support.Cache;
  * 
  * @author Liang Fei (liangfei0201 AT gmail DOT com)
  */
-public class AdaptiveCache implements Cache {
+public class AdaptiveCache implements Cache, Configurable<TemplateConfiguration> {
     
     private Cache cache;
     
-    public void configure(Map<String, String> config) {
-        String capacity = config.get(CACHE_CAPACITY);
+	@Override
+	@SuppressWarnings("unchecked")
+    public void configure(TemplateConfiguration config) {
+        String capacity = config.getCacheCapacity();
+        
         if (capacity != null && capacity.trim().length() > 0 && Integer.parseInt(capacity.trim()) > 0) {
             cache = new LruCache(Integer.parseInt(capacity.trim()));
         } else {
             cache = new StrongCache();
         }
         if (cache instanceof Configurable) {
-            ((Configurable)cache).configure(config);
+            ((Configurable<TemplateConfiguration>)cache).configure(config);
         }
     }
 

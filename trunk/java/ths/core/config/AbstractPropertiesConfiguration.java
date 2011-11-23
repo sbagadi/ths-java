@@ -6,6 +6,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Iterator;
+import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Properties;
 import java.util.regex.Pattern;
@@ -22,7 +23,7 @@ public abstract class AbstractPropertiesConfiguration extends AbstractConfigurat
 	}
 	
 	@Override
-	public void loadUserConfig() {
+	public void loadUserConfig(Map<String, String> config) {
 		this.setDefaultConfig();
 	}
 	
@@ -51,9 +52,9 @@ public abstract class AbstractPropertiesConfiguration extends AbstractConfigurat
     			    throw new FileNotFoundException("Not found file " + path);
     			}
     			
-    			this.loadUserConfig();
-    			
+    			this.loadUserConfig(null);
     			properties.load(in);
+    			
     			Iterator<Entry<Object, Object>> itr = properties.entrySet().iterator();
     			while (itr.hasNext()) {
     				 Entry<Object, Object> e = itr.next();
