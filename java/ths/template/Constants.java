@@ -6,14 +6,28 @@ package ths.template;
  * @see com.googlecode.httl.Configurable#configure(java.util.Map)
  */
 public interface Constants {
-
-    public static final String CONFIGURE           = "configure";
-
-    public static final String SET_ENGINE          = "setEngine";
-
+	
     public static final String NULL                = "null";
 
     public static final String PLUS                = "+";
+	
+    /*
+    public static final String OUTPUT_STREAM       = "output.stream";
+    
+    public static final String NULL_VALUE          = "null.value";
+
+    public static final String TRUE_VALUE          = "true.value";
+
+    public static final String FALSE_VALUE         = "false.value";   
+    
+    public static final String OUTPUT_ENCODING     = "output.encoding";
+    */
+   /* 
+    
+	
+    public static final String CONFIGURE           = "configure";
+
+    public static final String SET_ENGINE          = "setEngine";
 
     public static final String CACHE               = "cache";
 
@@ -67,11 +81,11 @@ public interface Constants {
 
     public static final String INPUT_ENCODING      = "input.encoding";
 
-    public static final String OUTPUT_ENCODING     = "output.encoding";
+    
 
     public static final String LOCALE              = "locale";
 
-    public static final String OUTPUT_STREAM       = "output.stream";
+    
 
     public static final String TIME_ZONE           = "time.zone";
 
@@ -79,12 +93,9 @@ public interface Constants {
 
     public static final String NUMBER_FORMAT       = "number.format";
 
-    public static final String NULL_VALUE          = "null.value";
 
-    public static final String TRUE_VALUE          = "true.value";
-
-    public static final String FALSE_VALUE         = "false.value";
 
     public static final String HTTL                = "httl";
+    */
 
 }

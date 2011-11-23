@@ -6,6 +6,7 @@ import java.util.Map;
 
 import ths.template.Engine;
 import ths.template.Expression;
+import ths.template.base.TemplateConfigurable;
 import ths.template.support.EngineAware;
 import ths.template.support.Translator;
 import ths.template.support.translators.expression.ExpressionImpl;
@@ -30,11 +31,9 @@ public class DfaTranslator implements Translator, EngineAware {
         this.engine = engine;
     }
     
-    public void configure(Map<String, String> config) {
-        String packages = config.get(IMPORT_PACKAGES);
-        if (packages != null && packages.trim().length() > 0) {
-            importPackages = packages.trim().split("\\s*\\,\\s*");
-        }
+    public void configure(TemplateConfigurable config) {
+        String packages = config.getImportPackages(); 
+        this.importPackages = packages.trim().split("\\s*\\,\\s*");
     }
     
 	public Expression translate(String source, Map<String, Class<?>> parameterTypes, int offset) throws ParseException {
