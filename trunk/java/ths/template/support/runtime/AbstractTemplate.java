@@ -1,20 +1,4 @@
-/*
- *  Licensed to the Apache Software Foundation (ASF) under one or more
- *  contributor license agreements.  See the NOTICE file distributed with
- *  this work for additional information regarding copyright ownership.
- *  The ASF licenses this file to You under the Apache License, Version 2.0
- *  (the "License"); you may not use this file except in compliance with
- *  the License.  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- */
-package com.googlecode.httl.support.runtime;
+package ths.template.support.runtime;
 
 import java.io.IOException;
 import java.io.OutputStream;
@@ -29,18 +13,19 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import com.googlecode.httl.Constants;
-import com.googlecode.httl.Context;
-import com.googlecode.httl.Engine;
-import com.googlecode.httl.Resource;
-import com.googlecode.httl.Template;
-import com.googlecode.httl.support.Filter;
-import com.googlecode.httl.support.Formatter;
-import com.googlecode.httl.support.Loader;
-import com.googlecode.httl.support.formatters.MultiFormatter;
-import com.googlecode.httl.support.util.IOUtils;
-import com.googlecode.httl.support.util.StringUtils;
-import com.googlecode.httl.support.util.UnsafeByteArrayOutputStream;
+import ths.core.Loader;
+import ths.core.Resource;
+
+import ths.template.Constants;
+import ths.template.Context;
+import ths.template.Engine;
+import ths.template.Template;
+import ths.template.support.Filter;
+import ths.template.support.Formatter;
+import ths.template.support.formatters.MultiFormatter;
+import ths.template.util.IOUtils;
+import ths.template.util.StringUtils;
+import ths.template.util.UnsafeByteArrayOutputStream;
 
 /**
  * Abstract template. (SPI, Prototype, ThreadSafe)

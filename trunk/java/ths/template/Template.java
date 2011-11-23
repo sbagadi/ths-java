@@ -6,7 +6,6 @@ import java.io.Writer;
 import java.util.Map;
 
 import ths.core.Resource;
-import ths.template.base.Statement;
 
 public interface Template extends Resource, Statement {
 

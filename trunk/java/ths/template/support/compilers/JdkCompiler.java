@@ -1,20 +1,4 @@
-/*
- *  Licensed to the Apache Software Foundation (ASF) under one or more
- *  contributor license agreements.  See the NOTICE file distributed with
- *  this work for additional information regarding copyright ownership.
- *  The ASF licenses this file to You under the Apache License, Version 2.0
- *  (the "License"); you may not use this file except in compliance with
- *  the License.  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- */
-package com.googlecode.httl.support.compilers;
+package ths.template.support.compilers;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -49,9 +33,8 @@ import javax.tools.StandardJavaFileManager;
 import javax.tools.StandardLocation;
 import javax.tools.ToolProvider;
 
-import com.googlecode.httl.Configurable;
-import com.googlecode.httl.support.Compiler;
-import com.googlecode.httl.support.util.ClassUtils;
+import ths.template.support.Compiler;
+import ths.template.util.ClassUtils;
 
 /**
  * JdkCompiler. (SPI, Singleton, ThreadSafe)
@@ -60,7 +43,7 @@ import com.googlecode.httl.support.util.ClassUtils;
  * 
  * @author Liang Fei (liangfei0201 AT gmail DOT com)
  */
-public class JdkCompiler extends AbstractCompiler implements Configurable {
+public class JdkCompiler extends AbstractCompiler {
 
     private final JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
 
@@ -98,7 +81,7 @@ public class JdkCompiler extends AbstractCompiler implements Configurable {
         });
         javaFileManager = new JavaFileManagerImpl(manager, classLoader);
     }
-    
+    /*
     public void configure(Map<String, String> config) {
         super.configure(config);
         String version = config.get(JAVA_VERSION);
@@ -107,7 +90,7 @@ public class JdkCompiler extends AbstractCompiler implements Configurable {
             options.add("-target");
             options.add(version.trim());
         }
-    }
+    }*/
     
     @Override
     public Class<?> doCompile(String name, String sourceCode) throws Throwable {

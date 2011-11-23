@@ -3,8 +3,15 @@ package ths.template.support;
 import java.text.ParseException;
 import java.util.Map;
 
-import ths.template.base.Expression;
+import ths.template.Expression;
 
+/**
+ * Expression Translator. (SPI, Singleton, ThreadSafe)
+ * 
+ * @see com.googlecode.httl.Engine#setTranslator(translator)
+ * 
+ * @author Liang Fei (liangfei0201 AT gmail DOT com)
+ */
 public interface Translator {
     
 	/**

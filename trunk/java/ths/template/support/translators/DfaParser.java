@@ -1,20 +1,4 @@
-/*
- *  Licensed to the Apache Software Foundation (ASF) under one or more
- *  contributor license agreements.  See the NOTICE file distributed with
- *  this work for additional information regarding copyright ownership.
- *  The ASF licenses this file to You under the Apache License, Version 2.0
- *  (the "License"); you may not use this file except in compliance with
- *  the License.  You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
- */
-package com.googlecode.httl.support.translators;
+package ths.template.support.translators;
 
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -28,18 +12,18 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.googlecode.httl.Expression;
-import com.googlecode.httl.support.Translator;
-import com.googlecode.httl.support.translators.expression.AbstractExpression;
-import com.googlecode.httl.support.translators.expression.BinaryOperator;
-import com.googlecode.httl.support.translators.expression.Bracket;
-import com.googlecode.httl.support.translators.expression.Constant;
-import com.googlecode.httl.support.translators.expression.Operator;
-import com.googlecode.httl.support.translators.expression.Token;
-import com.googlecode.httl.support.translators.expression.UnaryOperator;
-import com.googlecode.httl.support.translators.expression.Variable;
-import com.googlecode.httl.support.util.LinkedStack;
-import com.googlecode.httl.support.util.StringUtils;
+import ths.template.Expression;
+import ths.template.support.Translator;
+import ths.template.support.translators.expression.AbstractExpression;
+import ths.template.support.translators.expression.BinaryOperator;
+import ths.template.support.translators.expression.Bracket;
+import ths.template.support.translators.expression.Constant;
+import ths.template.support.translators.expression.Operator;
+import ths.template.support.translators.expression.Token;
+import ths.template.support.translators.expression.UnaryOperator;
+import ths.template.support.translators.expression.Variable;
+import ths.template.util.LinkedStack;
+import ths.template.util.StringUtils;
 
 /**
  * Deterministic Finite state Automata (DFA) Expression parser (Thread Safe)

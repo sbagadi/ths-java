@@ -1,4 +1,4 @@
-package ths.template.base;
+package ths.template;
 
 import java.io.IOException;
 import java.text.ParseException;

@@ -1,4 +1,4 @@
-package ths.template.base;
+package ths.template;
 
 import java.text.ParseException;
 import java.util.Map;

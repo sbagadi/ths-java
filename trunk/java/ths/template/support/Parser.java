@@ -6,6 +6,13 @@ import java.text.ParseException;
 import ths.core.Resource;
 import ths.template.Template;
 
+/**
+ * Template Parser. (SPI, Singleton, ThreadSafe)
+ * 
+ * @see com.googlecode.httl.Engine#setParser(Parser)
+ * 
+ * @author Liang Fei (liangfei0201 AT gmail DOT com)
+ */
 public interface Parser {
     
 	/**
