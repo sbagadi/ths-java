@@ -15,6 +15,8 @@ import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.locks.ReentrantLock;
 
+import ths.core.Configurable;
+import ths.core.Configuration;
 import ths.core.Resource;
 import ths.core.Loader;
 import ths.core.loaders.StringLoader;
@@ -24,9 +26,6 @@ import ths.template.support.Compiler;
 import ths.template.support.EngineAware;
 import ths.template.support.Filter;
 import ths.template.support.Formatter;
-import ths.template.support.Logger;
-import ths.template.support.loggers.LoggerUtils;
-import ths.template.support.LoggerAware;
 import ths.template.support.Parser;
 import ths.template.support.Translator;
 
@@ -36,7 +35,10 @@ import ths.template.util.ConfigUtils;
 import ths.template.util.StringUtils;
 import ths.template.util.UrlUtils;
 
-public class Engine {
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+public class Engine implements Configurable {
     
     /**
      * Default config path.
@@ -55,7 +57,7 @@ public class Engine {
 
     private volatile Map<String, String> configuration;
     
-    private volatile Logger logger = LoggerUtils.getDefaultLogger();
+    private volatile Logger logger = LoggerFactory.getLogger(getClass());
 
     private volatile Cache cache;
     
@@ -212,7 +214,8 @@ public class Engine {
 		return configuration;
 	}
 	
-    public synchronized void configure(Map<String, String> config) {
+    public synchronized void configure(Configuration config) {
+    	/*
         if (config == null || config.size() == 0) {
             return;
         }
@@ -247,7 +250,7 @@ public class Engine {
         this.configuration = Collections.unmodifiableMap(config);
         String cache = config.get(Constants.CACHE);
         if (cache != null && cache.trim().length() > 0) {
-            if (NULL.equals(cache.trim())) {
+            if (Constants.NULL.equals(cache.trim())) {
                 setCache(null);
             } else {
                 setCache((Cache) ClassUtils.newInstance(cache.trim()));
@@ -339,6 +342,7 @@ public class Engine {
                 logger.error(e.getMessage(), e);
             }
         }
+        */
     }
     
     /**
@@ -541,28 +545,6 @@ public class Engine {
 	 */
 	public void removeTemplate(String name) {
         literal.remove(name);
-    }
-	
-    /**
-     * Get logger.
-     * 
-     * @return logger.
-     */
-    public Logger getLogger() {
-        return logger;
-    }
-
-    /**
-     * Set logger.
-     * 
-     * @param logger - logger.
-     */
-    public void setLogger(Logger logger) {
-        if (loader == null) {
-            throw new IllegalArgumentException("logger == null");
-        }
-        init(logger);
-        this.logger = logger;
     }
     
 	/**
