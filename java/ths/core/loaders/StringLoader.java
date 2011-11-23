@@ -8,7 +8,16 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import ths.core.Resource;
+import ths.core.Loader;
 
+/**
+ * StringLoader. (SPI, Singleton, ThreadSafe)
+ * 
+ * @see com.googlecode.httl.Engine#setLoader(Loader)
+ * @see com.googlecode.httl.Engine#addTemplate(String, String)
+ * 
+ * @author Liang Fei (liangfei0201 AT gmail DOT com)
+ */
 public class StringLoader extends AbstractLoader {
     
     private final Map<String, String> templates = new ConcurrentHashMap<String, String>();

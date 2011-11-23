@@ -7,6 +7,13 @@ import java.util.zip.ZipFile;
 
 import ths.core.Loader;
 
+/**
+ * ZipResource. (SPI, Prototype, ThreadSafe)
+ * 
+ * @see com.googlecode.httl.support.loaders.ZipLoader#load(String, String)
+ * 
+ * @author Liang Fei (liangfei0201 AT gmail DOT com)
+ */
 public class ZipResource extends InputStreamResource {
 
 	private static final long serialVersionUID = 1L;

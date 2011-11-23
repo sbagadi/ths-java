@@ -6,15 +6,23 @@ import java.util.List;
 import java.util.zip.ZipFile;
 
 import ths.core.Resource;
+import ths.core.Loader;
 import ths.commons.util.UrlUtils;
 
+/**
+ * ZipLoader. (SPI, Singleton, ThreadSafe)
+ * 
+ * @see com.googlecode.httl.Engine#setLoader(Loader)
+ * 
+ * @author Liang Fei (liangfei0201 AT gmail DOT com)
+ */
 public class ZipLoader extends AbstractLoader {
 	
 	private File file;
 	
-	public void setLoaderConfigurable(LoaderConfigurable configurable) {
-	    super.setLoaderConfigurable(configurable);
-	    file = new File(this.configurable.getDirectory());
+	public void configure(LoaderConfiguration config) {
+	    super.configure(config);
+	    file = new File(this.directory);
 	}
 	
 	protected List<String> doList(String directory, String[] suffixes) throws IOException {

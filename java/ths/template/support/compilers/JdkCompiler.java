@@ -33,6 +33,8 @@ import javax.tools.StandardJavaFileManager;
 import javax.tools.StandardLocation;
 import javax.tools.ToolProvider;
 
+import ths.core.Configurable;
+import ths.template.TemplateConfiguration;
 import ths.template.support.Compiler;
 import ths.template.util.ClassUtils;
 
@@ -43,7 +45,7 @@ import ths.template.util.ClassUtils;
  * 
  * @author Liang Fei (liangfei0201 AT gmail DOT com)
  */
-public class JdkCompiler extends AbstractCompiler {
+public class JdkCompiler extends AbstractCompiler implements Configurable<TemplateConfiguration> {
 
     private final JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
 
@@ -81,16 +83,18 @@ public class JdkCompiler extends AbstractCompiler {
         });
         javaFileManager = new JavaFileManagerImpl(manager, classLoader);
     }
-    /*
-    public void configure(Map<String, String> config) {
+    
+    @Override
+    public void configure(TemplateConfiguration config) {
         super.configure(config);
-        String version = config.get(JAVA_VERSION);
+        String version = config.getJavaVersion();
+        
         if (version != null && version.trim().length() > 0) {
             options = new ArrayList<String>();
             options.add("-target");
             options.add(version.trim());
         }
-    }*/
+    }
     
     @Override
     public Class<?> doCompile(String name, String sourceCode) throws Throwable {

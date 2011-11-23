@@ -2,14 +2,12 @@ package ths.template.support.web;
 
 import java.io.IOException;
 import java.text.ParseException;
-import java.util.Properties;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import ths.template.Constants;
 import ths.template.Engine;
 import ths.template.Template;
 import ths.core.loaders.ServletLoader;
@@ -33,22 +31,17 @@ public class HttlServlet extends HttpServlet {
     public void init() throws ServletException {
         ServletLoader.setServletContext(getServletContext());
         String config = getServletConfig().getInitParameter(CONFIGURATION);
+        
         if (config != null && config.length() > 0) {
             if (config.startsWith("/")) {
-                Properties properties = new Properties();
-                try {
-                    properties.load(getServletContext().getResourceAsStream(config));
-                } catch (IOException e) {
-                    throw new ServletException("Failed to load httl config: " + config + ", cause: " + e.getMessage(), e);
-                }
-                this.engine = Engine.getEngine(config, properties);
+                this.engine = Engine.getEngine(getServletContext().getContextPath() + config);
             } else {
                 this.engine = Engine.getEngine(config);
             }
         } else {
             this.engine = Engine.getEngine();
         }
-        isOutputStream = "true".equalsIgnoreCase(engine.getConfiguration().get(Constants.OUTPUT_STREAM));
+        isOutputStream = "true".equalsIgnoreCase(engine.getConfiguration().getOutputStream());
     }
 
     public void doGet(HttpServletRequest request, HttpServletResponse response)

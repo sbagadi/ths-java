@@ -16,7 +16,6 @@ import java.util.Map;
 import ths.core.Loader;
 import ths.core.Resource;
 
-import ths.template.Constants;
 import ths.template.Context;
 import ths.template.Engine;
 import ths.template.Template;
@@ -118,9 +117,9 @@ public abstract class AbstractTemplate implements Template, Serializable {
             this.doubleFormatter = null;
             this.dateFormatter = null;
 		}
-		this.nullValue = getConfiguration(engine, Constants.NULL_VALUE, "");
-		this.trueValue = getConfiguration(engine, Constants.TRUE_VALUE, "true");
-		this.falseValue = getConfiguration(engine, Constants.FALSE_VALUE, "false");
+		this.nullValue = engine.getConfiguration().getNullValue();
+		this.trueValue = engine.getConfiguration().getTrueValue();
+		this.falseValue = engine.getConfiguration().getFalseValue();
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -130,14 +129,6 @@ public abstract class AbstractTemplate implements Template, Serializable {
 	        return defaultFormatter;
 	    }
 	    return formatter;
-	}
-	
-	private static String getConfiguration(Engine engine, String key, String defaultValue) {
-	    String value = engine.getConfiguration().get(key);
-	    if (value == null || value.length() == 0) {
-	        return defaultValue;
-	    }
-	    return value;
 	}
 	
 	public Engine getEngine() {
@@ -244,7 +235,7 @@ public abstract class AbstractTemplate implements Template, Serializable {
     }
     
     protected String toString(UnsafeByteArrayOutputStream output) {
-        String encoding = engine.getConfiguration().get(Constants.OUTPUT_ENCODING);
+        String encoding = engine.getConfiguration().getOutputEncoding();
         if (encoding != null && encoding.length() > 0) {
             try {
                 return new String(output.toByteArray(), encoding);

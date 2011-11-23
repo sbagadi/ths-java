@@ -9,9 +9,10 @@ public interface Constants {
 	
     public static final String NULL                = "null";
 
+    /*
     public static final String PLUS                = "+";
 	
-    /*
+   
     public static final String OUTPUT_STREAM       = "output.stream";
     
     public static final String NULL_VALUE          = "null.value";

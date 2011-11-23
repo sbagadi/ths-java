@@ -6,17 +6,14 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.locks.ReentrantLock;
 
 import ths.core.Configurable;
-import ths.core.Configuration;
 import ths.core.Resource;
 import ths.core.Loader;
 import ths.core.loaders.StringLoader;
@@ -28,24 +25,20 @@ import ths.template.support.Filter;
 import ths.template.support.Formatter;
 import ths.template.support.Parser;
 import ths.template.support.Translator;
-
 import ths.template.support.sequences.StringSequence;
 import ths.template.util.ClassUtils;
-import ths.template.util.ConfigUtils;
 import ths.template.util.StringUtils;
 import ths.template.util.UrlUtils;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class Engine implements Configurable {
+public class Engine implements Configurable<TemplateConfiguration> {
     
     /**
      * Default config path.
      */
     public static final String DEFAULT_PATH = "httl.properties";
-    
-    private static final Map<String, String> DEFAULT_CONFIGURATION = ConfigUtils.loadProperties("httl-default.properties");
 
     private static final ConcurrentMap<String, ReentrantLock> ENGINE_LOCKS = new ConcurrentHashMap<String, ReentrantLock>();
 
@@ -55,7 +48,7 @@ public class Engine implements Configurable {
 
     private final StringLoader literal = new StringLoader();
 
-    private volatile Map<String, String> configuration;
+    private volatile TemplateConfiguration configuration;
     
     private volatile Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -90,36 +83,6 @@ public class Engine implements Configurable {
 		return getEngine(DEFAULT_PATH);
 	}
 
-    /**
-     * Get template engine singleton.
-     * 
-     * @param configPath config path.
-     * @return template engine.
-     */
-    public static Engine getEngine(String configPath) {
-        return getEngine(configPath, (Map<String, String>)null);
-    }
-    
-	/**
-     * Get template engine singleton.
-     * 
-     * @param configProperties config properties.
-     * @return template engine.
-     */
-	public static Engine getEngine(Properties configProperties) {
-		return getEngine(DEFAULT_PATH, configProperties);
-	}
-	
-	/**
-     * Get template engine singleton.
-     * 
-     * @param configProperties config properties.
-     * @return template engine.
-     */
-    public static Engine getEngine(Map<String, String> configProperties) {
-        return getEngine(DEFAULT_PATH, configProperties);
-    }
-	
 	/**
      * Get template engine singleton.
      * 
@@ -127,19 +90,7 @@ public class Engine implements Configurable {
      * @param configProperties config map.
      * @return template engine.
      */
-	@SuppressWarnings({ "rawtypes", "unchecked" })
-    public static Engine getEngine(String configPath, Properties configProperties) {
-	    return getEngine(configPath, (Map) configProperties);
-	}
-
-	/**
-     * Get template engine singleton.
-     * 
-     * @param configPath config path.
-     * @param configProperties config map.
-     * @return template engine.
-     */
-	public static Engine getEngine(String configPath, Map<String, String> configProperties) {
+	public static Engine getEngine(String configPath) {
 		if (configPath == null || configPath.length() == 0) {
 			throw new IllegalArgumentException("httl config path == null");
 		}
@@ -155,7 +106,7 @@ public class Engine implements Configurable {
             try {
                 engine = ENGINES.get(configPath);
                 if (engine == null) { // double check
-                    engine = configProperties == null ? new Engine(configPath) : new Engine(configProperties);
+                    engine = new Engine(configPath);
                     ENGINES.put(configPath, engine);
                 }
             } finally {
@@ -179,43 +130,27 @@ public class Engine implements Configurable {
 	 * @param configuration path
 	 */
 	public Engine(String configuration) {
-        this(ConfigUtils.loadProperties(configuration, DEFAULT_PATH.equals(configuration)));
+        //this(ConfigUtils.loadProperties(configuration, DEFAULT_PATH.equals(configuration)));
+		TemplateConfiguration config = new TemplateConfiguration();
+		config.load(configuration);
+		this.configure(config);
     }
 	
-	/**
-     * Create template engine.
-     * 
-     * @param configuration
-     */
-    @SuppressWarnings({ "unchecked", "rawtypes" })
-    public Engine(Properties configuration) {
-        this((Map) configuration);
-    }
-
-	/**
-	 * Create template engine.
-	 * 
-	 * @param configuration
-	 */
-    public Engine(Map<String, String> configuration) {
-        Map<String, String> copy = new HashMap<String, String>(DEFAULT_CONFIGURATION);
-        if (configuration != null) {
-            copy.putAll(configuration);
-        }
-	    configure(copy);
-	}
-
 	/**
 	 * Get configuration.
 	 * 
 	 * @return configuration.
 	 */
-	public Map<String, String> getConfiguration() {
+	public TemplateConfiguration getConfiguration() {
 		return configuration;
 	}
 	
-    public synchronized void configure(Configuration config) {
-    	/*
+	@Override
+    public synchronized void configure(TemplateConfiguration config) {
+		this.configuration = config;
+		
+    	
+		/*
         if (config == null || config.size() == 0) {
             return;
         }
@@ -248,7 +183,9 @@ public class Engine implements Configurable {
             }
         }
         this.configuration = Collections.unmodifiableMap(config);
-        String cache = config.get(Constants.CACHE);
+        */
+		
+        String cache = config.getCache();
         if (cache != null && cache.trim().length() > 0) {
             if (Constants.NULL.equals(cache.trim())) {
                 setCache(null);
@@ -256,35 +193,41 @@ public class Engine implements Configurable {
                 setCache((Cache) ClassUtils.newInstance(cache.trim()));
             }
         }
-        String loader = config.get(Constants.LOADER);
+        
+        String loader = config.getLoader();
         if (loader != null && loader.trim().length() > 0) {
             setLoader((Loader) ClassUtils.newInstance(loader.trim()));
         }
-        String parser = config.get(Constants.PARSER);
+        
+        String parser = config.getParser();
         if (parser != null && parser.trim().length() > 0) {
             setParser((Parser) ClassUtils.newInstance(parser.trim()));
         }
-        String resolver = config.get(Constants.TRANSLATOR);
+        
+        String resolver = config.getTranslator();
         if (resolver != null && resolver.trim().length() > 0) {
             setTranslator((Translator) ClassUtils.newInstance(resolver.trim()));
         }
-        String compiler = config.get(Constants.COMPILER);
+        String compiler = config.getCompiler();
         if (compiler != null && compiler.trim().length() > 0) {
             setCompiler((Compiler) ClassUtils.newInstance(compiler.trim()));
         }
-        String rep = config.get(Constants.TEXT_FILTER);
+        String rep = config.getTextFilter();
         if (rep != null && rep.trim().length() > 0) {
             setTextFilter((Filter) ClassUtils.newInstance(rep));
         }
-        String fmt = config.get(Constants.FORMATTER);
+        
+        String fmt = config.getFormatter();
         if (fmt != null && fmt.trim().length() > 0) {
             setFormatter((Formatter<?>) ClassUtils.newInstance(fmt));
         }
-        String flt = config.get(Constants.FILTERS);
+        
+        String flt = config.getFilter();
         if (flt != null && flt.trim().length() > 0) {
             setFilter((Filter) ClassUtils.newInstance(flt));
         }
-        String fun = config.get(Constants.FUNCTIONS);
+        
+        String fun = config.getFunctions();
         if (fun != null && fun.trim().length() > 0) {
             String[] funs = fun.trim().split("[\\s\\,]+");
             Object[] functions = new Object[funs.length];
@@ -293,7 +236,8 @@ public class Engine implements Configurable {
             }
             setFunctions(functions);
         }
-        String seq = config.get(SEQUENCES);
+        
+        String seq = config.getSequences();
         if (seq != null && seq.trim().length() > 0) {
             String[] ss = seq.trim().split(",");
             for (String s : ss) {
@@ -326,8 +270,9 @@ public class Engine implements Configurable {
         if (compiler == null) {
             throw new IllegalStateException("compiler == null");
         }
-        reloadable = "true".equalsIgnoreCase(config.get(RELOADABLE));
-        boolean precompiled = "true".equalsIgnoreCase(config.get(PRECOMPILED));
+        
+        reloadable = "true".equalsIgnoreCase(config.getReloadable());
+        boolean precompiled = "true".equalsIgnoreCase(config.getPrecompiled());
         if (precompiled) {
             try {
                 List<String> list = getLoader().list();
@@ -342,7 +287,7 @@ public class Engine implements Configurable {
                 logger.error(e.getMessage(), e);
             }
         }
-        */
+        
     }
     
     /**
@@ -825,16 +770,14 @@ public class Engine implements Configurable {
         addSequence(Arrays.asList(sequence));
     }
     
-    private void init(Object object) {
-        if (object instanceof LoggerAware) {
-            ((LoggerAware) object).setLogger(logger);
-        }
+    @SuppressWarnings("unchecked")
+	private void init(Object object) {
         if (object instanceof EngineAware) {
             ((EngineAware) object).setEngine(this);
         }
+        
         if (object instanceof Configurable) {
-            ((Configurable) object).configure(getConfiguration());
+            ((Configurable<TemplateConfiguration>) object).configure(getConfiguration());
         }
     }
-    
 }

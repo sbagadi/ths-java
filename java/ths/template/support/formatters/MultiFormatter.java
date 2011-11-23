@@ -3,7 +3,8 @@ package ths.template.support.formatters;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import ths.template.Constants;
+import ths.core.Configurable;
+import ths.template.TemplateConfiguration;
 import ths.template.support.Formatter;
 import ths.template.util.ClassUtils;
 import ths.template.util.StringUtils;
@@ -15,19 +16,22 @@ import ths.template.util.StringUtils;
  * 
  * @author Liang Fei (liangfei0201 AT gmail DOT com)
  */
-public class MultiFormatter implements Formatter<Object> {
+public class MultiFormatter implements Formatter<Object>, Configurable<TemplateConfiguration> {
     
     private final Map<Class<?>, Formatter<?>> templateFormatters = new ConcurrentHashMap<Class<?>, Formatter<?>>();
     
-    public void configure(Map<String, String> config) {
-        String value = config.get(Constants.FORMATTERS);
+    @Override
+    @SuppressWarnings("unchecked")
+    public void configure(TemplateConfiguration config) {
+        String value = config.getFormatters();
+        
         if (value != null && value.trim().length() > 0) {
             String[] values = value.trim().split("[\\s\\,]+");
             Formatter<?>[] formatters = new Formatter<?>[values.length];
             for (int i = 0; i < values.length; i ++) {
                 formatters[i] = (Formatter<?>) ClassUtils.newInstance(values[i]);
                 if (formatters[i] instanceof Configurable) {
-                    ((Configurable)formatters[i]).configure(config);
+                    ((Configurable<TemplateConfiguration>)formatters[i]).configure(config);
                 }
             }
             add(formatters);

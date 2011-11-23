@@ -1,10 +1,10 @@
 package ths.template.support.filters;
 
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.CopyOnWriteArrayList;
 
-import ths.template.Constants;
+import ths.core.Configurable;
+import ths.template.TemplateConfiguration;
 import ths.template.support.Filter;
 import ths.template.util.ClassUtils;
 
@@ -15,19 +15,22 @@ import ths.template.util.ClassUtils;
  * 
  * @author Liang Fei (liangfei0201 AT gmail DOT com)
  */
-public class MultiFilter implements Filter {
+public class MultiFilter implements Filter, Configurable<TemplateConfiguration> {
     
     private final List<Filter> templateFilters = new CopyOnWriteArrayList<Filter>();
     
-    public void configure(Map<String, String> config) {
-        String value = config.get(Constants.FILTERS);
+    @Override
+    @SuppressWarnings("unchecked")
+    public void configure(TemplateConfiguration config) {
+        String value = config.getFilters();
+        
         if (value != null && value.trim().length() > 0) {
             String[] values = value.trim().split("[\\s\\,]+");
             Filter[] filters = new Filter[values.length];
             for (int i = 0; i < values.length; i ++) {
                 filters[i] = (Filter) ClassUtils.newInstance(values[i]);
                 if (filters[i] instanceof Configurable) {
-                    ((Configurable)filters[i]).configure(config);
+                    ((Configurable<TemplateConfiguration>)filters[i]).configure(config);
                 }
             }
             add(filters);

@@ -12,9 +12,10 @@ import java.util.Random;
 import java.util.UUID;
 
 import ths.core.Resource;
+import ths.core.Configurable;
+import ths.template.TemplateConfiguration;
 import ths.template.Context;
 import ths.template.Template;
-import ths.template.Constants;
 import ths.template.support.runtime.Cycle;
 import ths.template.util.ClassUtils;
 import ths.template.util.DateUtils;
@@ -31,7 +32,7 @@ import ths.template.util.UrlUtils;
  * 
  * @author Liang Fei (liangfei0201 AT gmail DOT com)
  */
-public class DefaultFunction {
+public class DefaultFunction implements Configurable<TemplateConfiguration> {
     
     private static final Random RANDOM = new Random();
     
@@ -41,20 +42,24 @@ public class DefaultFunction {
 
     protected String[] importPackages;
     
-    public void configure(Map<String, String> config) {
-        String format = config.get(Constants.DATE_FORMAT);
+    @Override
+    public void configure(TemplateConfiguration config) {
+        String format = config.getDateFormat();
+        format = config.getNumberFormat();
+        String packages = config.getImportPackages();
+        
         if (format != null && format.trim().length() > 0) {
             format = format.trim();
             new SimpleDateFormat(format).format(new Date());
             this.dateFormat = format;
         }
-        format = config.get(Constants.NUMBER_FORMAT);
+        
         if (format != null && format.trim().length() > 0) {
             format = format.trim();
             new DecimalFormat(format).format(0);
             this.numberFormat = format;
         }
-        String packages = config.get(IMPORT_PACKAGES);
+        
         if (packages != null && packages.trim().length() > 0) {
             importPackages = packages.trim().split("\\s*\\,\\s*");
         }

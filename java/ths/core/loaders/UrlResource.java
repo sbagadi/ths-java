@@ -9,6 +9,13 @@ import java.net.URL;
 
 import ths.core.Loader;
 
+/**
+ * UrlResource. (SPI, Prototype, ThreadSafe)
+ * 
+ * @see com.googlecode.httl.support.loaders.UrlLoader#load(String, String)
+ * 
+ * @author Liang Fei (liangfei0201 AT gmail DOT com)
+ */
 public class UrlResource extends InputStreamResource {
     
     private static final long serialVersionUID = 1L;

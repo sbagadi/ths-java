@@ -8,8 +8,17 @@ import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 
 import ths.core.Resource;
+import ths.core.Loader;
+import ths.core.loaders.AbstractLoader;
 import ths.commons.util.UrlUtils;
 
+/**
+ * ServletLoader. (SPI, Singleton, ThreadSafe)
+ * 
+ * @see com.googlecode.httl.Engine#setLoader(Loader)
+ * 
+ * @author Liang Fei (liangfei0201 AT gmail DOT com)
+ */
 public class ServletLoader extends AbstractLoader implements ServletContextListener {
     
     private static ServletContext SERVLET_CONTEXT;

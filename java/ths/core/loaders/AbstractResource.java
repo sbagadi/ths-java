@@ -3,6 +3,13 @@ package ths.core.loaders;
 import ths.core.Resource;
 import ths.core.Loader;
 
+/**
+ * AbstractResource. (SPI, Prototype, ThreadSafe)
+ * 
+ * @see com.googlecode.httl.support.loaders.AbstractLoader#load(String, String)
+ * 
+ * @author Liang Fei (liangfei0201 AT gmail DOT com)
+ */
 public abstract class AbstractResource implements Resource {
 
     private static final long serialVersionUID = 6834431114838915042L;

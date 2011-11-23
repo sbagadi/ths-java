@@ -6,6 +6,13 @@ import java.io.StringReader;
 
 import ths.core.Loader;
 
+/**
+ * StringResource. (SPI, Prototype, ThreadSafe)
+ * 
+ * @see com.googlecode.httl.support.loaders.StringLoader#load(String, String)
+ * 
+ * @author Liang Fei (liangfei0201 AT gmail DOT com)
+ */
 public class StringResource extends AbstractResource {
     
     private static final long serialVersionUID = 1L;

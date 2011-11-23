@@ -11,7 +11,7 @@ public interface Configuration {
 	
 	void loadDefaultConfig();
 	void mergeConfig(Map<String, String> config);
-	void loadUserConfig();
+	void loadUserConfig(Map<String, String> config);
 	boolean containsParameter(String key);
 	void setParameter(String key, String val);
 	String getParameter(String key, boolean hasEmpty) throws ConfigurationException;

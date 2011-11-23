@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import ths.template.TemplateConfiguration;
 import ths.template.Engine;
 import ths.template.support.Parser;
 import ths.template.support.Translator;
@@ -23,7 +24,7 @@ public class MultiParser extends AbstractParser {
     
     private Engine engine;
     
-    private Map<String, String> config;
+    private TemplateConfiguration config;
     
     private final List<AbstractParser> parsers = new ArrayList<AbstractParser>();
     
@@ -63,10 +64,10 @@ public class MultiParser extends AbstractParser {
     }
 
     @Override
-    public void configure(Map<String, String> config) {
+    public void configure(TemplateConfiguration config) {
         super.configure(config);
         this.config = config;
-        String value = config.get(PARSERS);
+        String value = config.getParsers();
         if (value != null && value.length() > 0) {
             String[] values = value.split("\\,");
             for (String v : values) {

@@ -1,8 +1,9 @@
 package ths.template.support.compilers;
 
 import java.text.ParseException;
-import java.util.Map;
 
+import ths.core.Configurable;
+import ths.template.TemplateConfiguration;
 import ths.template.support.Compiler;
 import ths.template.util.ClassUtils;
 
@@ -13,21 +14,24 @@ import ths.template.util.ClassUtils;
  * 
  * @author Liang Fei (liangfei0201 AT gmail DOT com)
  */
-public class AdaptiveCompiler implements Compiler {
+public class AdaptiveCompiler implements Compiler, Configurable<TemplateConfiguration> {
     
     private Compiler compiler;
-    /*
-    public void configure(Map<String, String> config) {
-        String version = config.get(JAVA_VERSION);
+
+    @Override
+    @SuppressWarnings("unchecked")
+    public void configure(TemplateConfiguration config) {
+        String version = config.getJavaVersion();
+        
         if (version == null || ClassUtils.isBeforeJava6(version.trim())) {
             compiler = new JavassistCompiler();
         } else {
             compiler = new JdkCompiler();
         }
         if (compiler instanceof Configurable) {
-            ((Configurable)compiler).configure(config);
+            ((Configurable<TemplateConfiguration>)compiler).configure(config);
         }
-    }*/
+    }
 
     public Class<?> compile(String code) throws ParseException {
         return compiler.compile(code);
