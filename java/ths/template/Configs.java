@@ -193,7 +193,7 @@ public class Configs extends AbstractPropertiesConfiguration {
 		try {
 			val = this.getParameter(key, hasEmpty);
 		} catch (ConfigurationException e) {
-			e.printStackTrace();
+			throw new IllegalArgumentException("Configuration["+ key +"] is empty.");
 		} 
 		return val;
 	}

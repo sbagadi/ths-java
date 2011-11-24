@@ -34,6 +34,10 @@ public class ActionController {
 		return name.toString();
 	}
 	
+	public static String getActionKey(String className) {
+		return className.replace("web.http.action.", "");
+	}
+	
 	public static AbstractHttpAction createActionObject(String className) throws InstantiationException, IllegalAccessException, ClassNotFoundException {
 		return (AbstractHttpAction)Class.forName(className).newInstance();
 	}	

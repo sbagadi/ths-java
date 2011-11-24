@@ -41,8 +41,8 @@ public class LoaderConfiguration extends AbstractConfiguration {
 		try {
 			val = this.getParameter(key, hasEmpty);
 		} catch (ConfigurationException e) {
-			e.printStackTrace();
-		} 
+			throw new IllegalArgumentException("Configuration["+ key +"] is empty.");
+		}
 		return val;
 	}	
 }
