@@ -5,7 +5,6 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 
-import ths.core.Configurable;
 import ths.core.Resource;
 import ths.core.Loader;
 
@@ -16,29 +15,22 @@ import ths.core.Loader;
  * 
  * @author Liang Fei (liangfei0201 AT gmail DOT com)
  */
-public abstract class AbstractLoader implements Loader, Configurable<LoaderConfiguration> {
+public abstract class AbstractLoader implements Loader {
 	protected String encoding;
 
 	protected String directory;
 
 	protected String[] suffixes;
-	
-    @Override
-    public void configure(LoaderConfiguration config) {   	
-        String encoding = config.getInputEncoding();
-        Charset.forName(encoding);
-        this.encoding = encoding;
+
+    public void init(String inputEncoding, String directory, String suffix) {   	
+        Charset.forName(inputEncoding);
+        this.encoding = inputEncoding;
         
-        String directory = config.getDirectory();
         if (directory.endsWith("/") || directory.endsWith("\\")) {
             directory = directory.substring(0, directory.length() - 1);
         }
         this.directory = directory.trim();
-
-        String suffix = config.getSuffixes();
-        if (suffix != null && suffix.trim().length() > 0) {
-            this.suffixes = suffix.trim().split("\\s*\\,\\*");
-        }
+        this.suffixes = suffix.trim().split("\\s*\\,\\*");
     }
     
     public List<String> list() throws IOException {
