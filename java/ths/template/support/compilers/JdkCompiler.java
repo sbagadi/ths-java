@@ -34,7 +34,7 @@ import javax.tools.StandardLocation;
 import javax.tools.ToolProvider;
 
 import ths.core.Configurable;
-import ths.template.TemplateConfiguration;
+import ths.template.Configs;
 import ths.template.support.Compiler;
 import ths.template.util.ClassUtils;
 
@@ -45,7 +45,7 @@ import ths.template.util.ClassUtils;
  * 
  * @author Liang Fei (liangfei0201 AT gmail DOT com)
  */
-public class JdkCompiler extends AbstractCompiler implements Configurable<TemplateConfiguration> {
+public class JdkCompiler extends AbstractCompiler implements Configurable<Configs> {
 
     private final JavaCompiler compiler = ToolProvider.getSystemJavaCompiler();
 
@@ -85,7 +85,7 @@ public class JdkCompiler extends AbstractCompiler implements Configurable<Templa
     }
     
     @Override
-    public void configure(TemplateConfiguration config) {
+    public void configure(Configs config) {
         super.configure(config);
         String version = config.getJavaVersion();
         

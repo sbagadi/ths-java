@@ -3,38 +3,31 @@ package ths.core.loaders;
 import java.util.Map;
 
 import ths.core.config.AbstractConfiguration;
+import ths.core.exception.ConfigurationException;
 
 public class LoaderConfiguration extends AbstractConfiguration {
-	
-	private String inputEncoding;
-
-	private String directory;
-
-	private String suffixes;
-	
-	private String loaders;
 
 	public String getInputEncoding() {
-		return inputEncoding;
+		return getLoaderParameter("loader.input.encoding", true);
 	}
 
 	public String getDirectory() {
-		return directory;
+		return getLoaderParameter("loader.directory", true);
 	}
 
 	public String getSuffixes() {
-		return suffixes;
+		return getLoaderParameter("loader.suffix", true);
 	}
 	
 	public String getLoaders() {
-		return loaders;
+		return getLoaderParameter("loader.loaders", true);
 	}
 
 	@Override
 	public void loadDefaultConfig() {
 		this.setParameter("loader.input.encoding", "utf-8");
-		this.setParameter("loader.directory", "./");
-		this.setParameter("loader.suffix", "*");
+		this.setParameter("loader.directory", "");
+		this.setParameter("loader.suffix", "");
 		this.setParameter("loader.loaders", "");
 	}
 
@@ -42,4 +35,14 @@ public class LoaderConfiguration extends AbstractConfiguration {
 	public void loadUserConfig(Map<String, String> config) {
 		this.mergeConfig(config);
 	}
+	
+	private String getLoaderParameter(String key, boolean hasEmpty) {
+		String val = null;
+		try {
+			val = this.getParameter(key, hasEmpty);
+		} catch (ConfigurationException e) {
+			e.printStackTrace();
+		} 
+		return val;
+	}	
 }

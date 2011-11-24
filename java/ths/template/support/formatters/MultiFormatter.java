@@ -4,7 +4,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import ths.core.Configurable;
-import ths.template.TemplateConfiguration;
+import ths.template.Configs;
 import ths.template.support.Formatter;
 import ths.template.util.ClassUtils;
 import ths.template.util.StringUtils;
@@ -16,13 +16,13 @@ import ths.template.util.StringUtils;
  * 
  * @author Liang Fei (liangfei0201 AT gmail DOT com)
  */
-public class MultiFormatter implements Formatter<Object>, Configurable<TemplateConfiguration> {
+public class MultiFormatter implements Formatter<Object>, Configurable<Configs> {
     
     private final Map<Class<?>, Formatter<?>> templateFormatters = new ConcurrentHashMap<Class<?>, Formatter<?>>();
     
     @Override
     @SuppressWarnings("unchecked")
-    public void configure(TemplateConfiguration config) {
+    public void configure(Configs config) {
         String value = config.getFormatters();
         
         if (value != null && value.trim().length() > 0) {
@@ -31,7 +31,7 @@ public class MultiFormatter implements Formatter<Object>, Configurable<TemplateC
             for (int i = 0; i < values.length; i ++) {
                 formatters[i] = (Formatter<?>) ClassUtils.newInstance(values[i]);
                 if (formatters[i] instanceof Configurable) {
-                    ((Configurable<TemplateConfiguration>)formatters[i]).configure(config);
+                    ((Configurable<Configs>)formatters[i]).configure(config);
                 }
             }
             add(formatters);

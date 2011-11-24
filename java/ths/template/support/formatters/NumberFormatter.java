@@ -4,7 +4,7 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 
 import ths.core.Configurable;
-import ths.template.TemplateConfiguration;
+import ths.template.Configs;
 import ths.template.support.Formatter;
 
 /**
@@ -14,12 +14,12 @@ import ths.template.support.Formatter;
  * 
  * @author Liang Fei (liangfei0201 AT gmail DOT com)
  */
-public class NumberFormatter implements Formatter<Number>, Configurable<TemplateConfiguration> {
+public class NumberFormatter implements Formatter<Number>, Configurable<Configs> {
     
     private String numberFormat;
     
     @Override
-    public void configure(TemplateConfiguration config) {
+    public void configure(Configs config) {
         String format = config.getNumberFormat();
         
         new DecimalFormat(format).format(0);

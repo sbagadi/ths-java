@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
+import ths.core.Configurable;
 import ths.core.Resource;
 import ths.core.Loader;
 import ths.commons.util.ClassUtils;
@@ -17,17 +18,22 @@ import ths.commons.util.ClassUtils;
  * 
  * @author Liang Fei (liangfei0201 AT gmail DOT com)
  */
-public class MultiLoader implements Loader {
+public class MultiLoader implements Loader, Configurable<LoaderConfiguration> {
 
     private final List<Loader> templateLoaders = new CopyOnWriteArrayList<Loader>();
     
-    public void init(String inputEncoding, String directory, String suffix, String loaderNames) {
-	
-        if (loaderNames != null && loaderNames.trim().length() > 0) {
-            String[] values = loaderNames.trim().split("[\\s\\,]+");
+	@Override
+	@SuppressWarnings("unchecked")
+	public void configure(LoaderConfiguration config) {
+	    String value = config.getLoaders();
+        if (value != null && value.trim().length() > 0) {
+            String[] values = value.trim().split("[\\s\\,]+");
             Loader[] loaders = new Loader[values.length];
             for (int i = 0; i < values.length; i ++) {
                 loaders[i] = (Loader)ClassUtils.newInstance(values[i]);
+                if (loaders[i] instanceof Configurable) {
+                    ((Configurable<LoaderConfiguration>)loaders[i]).configure(config);
+                }
             }
             add(loaders);
         }

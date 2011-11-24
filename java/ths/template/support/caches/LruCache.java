@@ -6,7 +6,7 @@ import java.util.Map.Entry;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import ths.core.Configurable;
-import ths.template.TemplateConfiguration;
+import ths.template.Configs;
 import ths.template.support.Cache;
 import ths.template.util.ConfigUtils;
 
@@ -17,7 +17,7 @@ import ths.template.util.ConfigUtils;
  * 
  * @author Liang Fei (liangfei0201 AT gmail DOT com)
  */
-public class LruCache extends MapCache implements Configurable<TemplateConfiguration> {
+public class LruCache extends MapCache implements Configurable<Configs> {
     
     private static final int DEFAULT_CAPACITY = 1000;
     
@@ -62,7 +62,7 @@ public class LruCache extends MapCache implements Configurable<TemplateConfigura
     }
 
     @Override
-    public void configure(TemplateConfiguration config) {
+    public void configure(Configs config) {
         String capacity = config.getCacheCapacity();
         
         if (capacity != null && ConfigUtils.isInteger(capacity.trim())) {

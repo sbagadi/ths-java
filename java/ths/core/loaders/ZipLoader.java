@@ -20,8 +20,9 @@ public class ZipLoader extends AbstractLoader {
 	
 	private File file;
 	
-	public void init(String inputEncoding, String directory, String suffix) {
-		super.init(inputEncoding, directory, suffix);
+	@Override
+	public void configure(LoaderConfiguration config) {
+	    super.configure(config);
 	    file = new File(this.directory);
 	}
 	

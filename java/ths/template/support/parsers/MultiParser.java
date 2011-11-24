@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import ths.template.TemplateConfiguration;
+import ths.template.Configs;
 import ths.template.Engine;
 import ths.template.support.Parser;
 import ths.template.support.Translator;
@@ -24,7 +24,7 @@ public class MultiParser extends AbstractParser {
     
     private Engine engine;
     
-    private TemplateConfiguration config;
+    private Configs config;
     
     private final List<AbstractParser> parsers = new ArrayList<AbstractParser>();
     
@@ -64,7 +64,7 @@ public class MultiParser extends AbstractParser {
     }
 
     @Override
-    public void configure(TemplateConfiguration config) {
+    public void configure(Configs config) {
         super.configure(config);
         this.config = config;
         String value = config.getParsers();

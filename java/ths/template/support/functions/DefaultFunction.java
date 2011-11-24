@@ -13,7 +13,7 @@ import java.util.UUID;
 
 import ths.core.Resource;
 import ths.core.Configurable;
-import ths.template.TemplateConfiguration;
+import ths.template.Configs;
 import ths.template.Context;
 import ths.template.Template;
 import ths.template.support.runtime.Cycle;
@@ -32,7 +32,7 @@ import ths.template.util.UrlUtils;
  * 
  * @author Liang Fei (liangfei0201 AT gmail DOT com)
  */
-public class DefaultFunction implements Configurable<TemplateConfiguration> {
+public class DefaultFunction implements Configurable<Configs> {
     
     private static final Random RANDOM = new Random();
     
@@ -43,7 +43,7 @@ public class DefaultFunction implements Configurable<TemplateConfiguration> {
     protected String[] importPackages;
     
     @Override
-    public void configure(TemplateConfiguration config) {
+    public void configure(Configs config) {
         String format = config.getDateFormat();
         format = config.getNumberFormat();
         String packages = config.getImportPackages();
