@@ -20,8 +20,8 @@ public class JarLoader extends AbstractLoader {
 	
 	private File file;
 	
-	public void configure(LoaderConfiguration config) {
-	    super.configure(config);
+	public void init(String inputEncoding, String directory, String suffix) {
+	    super.init(inputEncoding, directory, suffix);
 	    file = new File(this.directory);
 	}
 	
