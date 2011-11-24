@@ -17,10 +17,12 @@ import org.slf4j.LoggerFactory;
 
 import ths.web.AbstractHttpAction;
 import ths.web.ActionController;
+import ths.web.ActionObjectPool;
 
 
 public class ActionDispatcherFilter implements Filter {
 	private static final Logger logger = LoggerFactory.getLogger(ActionDispatcherFilter.class);
+	private static final ActionObjectPool pool = new ActionObjectPool();
 	private ServletContext sc;
 	
 	@Override
@@ -37,7 +39,7 @@ public class ActionDispatcherFilter implements Filter {
 		String className = ActionController.getActionClassName(request);
 		try {
 		
-			AbstractHttpAction action = ActionController.createActionObject(className);
+			AbstractHttpAction action = pool.getInstance(className);
 			action.setRequestAndResponse(request, response);
 			action.setServletContext(sc);
 			action.setHtmlHeader();

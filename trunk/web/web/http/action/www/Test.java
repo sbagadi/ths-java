@@ -33,7 +33,7 @@ public class Test extends AbstractHttpAction {
 		books[i] = new Book(UUID.randomUUID().toString(), UUID.randomUUID().toString(), UUID.randomUUID().toString(), new Date(), random.nextInt(100) + 10, random.nextInt(60) + 30);
 		}
 		Map<String, Object> context = new HashMap<String, Object>();
-		context.put("user", new User("liangfei", "admin"));
+		context.put("user", new User("田海深", "admin"));
 		context.put("books", books);		
 
 		engine.getTemplate("templates/books.html").render(context, out);
