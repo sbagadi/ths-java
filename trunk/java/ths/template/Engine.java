@@ -16,6 +16,7 @@ import java.util.concurrent.locks.ReentrantLock;
 import ths.core.Configurable;
 import ths.core.Resource;
 import ths.core.Loader;
+import ths.core.loaders.LoaderConfiguration;
 import ths.core.loaders.StringLoader;
 
 import ths.template.support.Cache;
@@ -33,12 +34,12 @@ import ths.template.util.UrlUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class Engine implements Configurable<TemplateConfiguration> {
+public class Engine implements Configurable<Configs> {
     
     /**
      * Default config path.
      */
-    public static final String DEFAULT_PATH = "httl.properties";
+    public static final String DEFAULT_CONFIG_LOCATION = "META-INF/template.properties";
 
     private static final ConcurrentMap<String, ReentrantLock> ENGINE_LOCKS = new ConcurrentHashMap<String, ReentrantLock>();
 
@@ -48,7 +49,7 @@ public class Engine implements Configurable<TemplateConfiguration> {
 
     private final StringLoader literal = new StringLoader();
 
-    private volatile TemplateConfiguration configuration;
+    private volatile Configs configuration;
     
     private volatile Logger logger = LoggerFactory.getLogger(getClass());
 
@@ -80,7 +81,7 @@ public class Engine implements Configurable<TemplateConfiguration> {
      * @return template engine.
      */
 	public static Engine getEngine() {
-		return getEngine(DEFAULT_PATH);
+		return getEngine(DEFAULT_CONFIG_LOCATION);
 	}
 
 	/**
@@ -92,7 +93,7 @@ public class Engine implements Configurable<TemplateConfiguration> {
      */
 	public static Engine getEngine(String configPath) {
 		if (configPath == null || configPath.length() == 0) {
-			throw new IllegalArgumentException("httl config path == null");
+			throw new IllegalArgumentException("template config path == null");
 		}
 		ReentrantLock lock = ENGINE_LOCKS.get(configPath);
         if (lock == null) {
@@ -121,7 +122,7 @@ public class Engine implements Configurable<TemplateConfiguration> {
 	 * Create template engine.
 	 */
 	public Engine() {
-	    this(DEFAULT_PATH);
+	    this(DEFAULT_CONFIG_LOCATION);
 	}
 
 	/**
@@ -131,7 +132,7 @@ public class Engine implements Configurable<TemplateConfiguration> {
 	 */
 	public Engine(String configuration) {
         //this(ConfigUtils.loadProperties(configuration, DEFAULT_PATH.equals(configuration)));
-		TemplateConfiguration config = new TemplateConfiguration();
+		Configs config = new Configs();
 		config.load(configuration);
 		this.configure(config);
     }
@@ -141,12 +142,12 @@ public class Engine implements Configurable<TemplateConfiguration> {
 	 * 
 	 * @return configuration.
 	 */
-	public TemplateConfiguration getConfiguration() {
+	public Configs getConfiguration() {
 		return configuration;
 	}
 	
 	@Override
-    public synchronized void configure(TemplateConfiguration config) {
+    public synchronized void configure(Configs config) {
 		this.configuration = config;
 		
     	
@@ -204,9 +205,9 @@ public class Engine implements Configurable<TemplateConfiguration> {
             setParser((Parser) ClassUtils.newInstance(parser.trim()));
         }
         
-        String resolver = config.getTranslator();
-        if (resolver != null && resolver.trim().length() > 0) {
-            setTranslator((Translator) ClassUtils.newInstance(resolver.trim()));
+        String translator = config.getTranslator();
+        if (translator != null && translator.trim().length() > 0) {
+            setTranslator((Translator) ClassUtils.newInstance(translator.trim()));
         }
         String compiler = config.getCompiler();
         if (compiler != null && compiler.trim().length() > 0) {
@@ -264,8 +265,8 @@ public class Engine implements Configurable<TemplateConfiguration> {
         if (parser == null) {
             throw new IllegalStateException("parser == null");
         }
-        if (resolver == null) {
-            throw new IllegalStateException("resolver == null");
+        if (translator == null) {
+            throw new IllegalStateException("translator == null");
         }
         if (compiler == null) {
             throw new IllegalStateException("compiler == null");
@@ -527,11 +528,16 @@ public class Engine implements Configurable<TemplateConfiguration> {
 	 * 
 	 * @param loader template loader.
 	 */
+	@SuppressWarnings("unchecked")
 	public void setLoader(Loader loader) {
 	    if (loader == null) {
 	        throw new IllegalArgumentException("loader == null");
 	    }
-	    init(loader);
+	    
+        if (loader instanceof Configurable) {
+            ((Configurable<LoaderConfiguration>) loader).configure(getConfiguration().getLoaderConfiguration());
+        }
+        
 	    this.loader = loader;
 	}
 
@@ -777,7 +783,7 @@ public class Engine implements Configurable<TemplateConfiguration> {
         }
         
         if (object instanceof Configurable) {
-            ((Configurable<TemplateConfiguration>) object).configure(getConfiguration());
+            ((Configurable<Configs>) object).configure(getConfiguration());
         }
     }
 }

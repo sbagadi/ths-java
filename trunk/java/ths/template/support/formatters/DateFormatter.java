@@ -4,7 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import ths.core.Configurable;
-import ths.template.TemplateConfiguration;
+import ths.template.Configs;
 import ths.template.support.Formatter;
 import ths.template.util.DateUtils;
 
@@ -15,12 +15,12 @@ import ths.template.util.DateUtils;
  * 
  * @author Liang Fei (liangfei0201 AT gmail DOT com)
  */
-public class DateFormatter implements Formatter<Date>, Configurable<TemplateConfiguration> {
+public class DateFormatter implements Formatter<Date>, Configurable<Configs> {
     
     private String dateFormat;
     
     @Override
-    public void configure(TemplateConfiguration config) {
+    public void configure(Configs config) {
         String format = config.getDateFormat();
         if (format != null && format.trim().length() > 0) {
             format = format.trim();

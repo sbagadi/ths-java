@@ -7,7 +7,7 @@ import java.util.Map;
 import ths.core.Configurable;
 import ths.template.Engine;
 import ths.template.Expression;
-import ths.template.TemplateConfiguration;
+import ths.template.Configs;
 import ths.template.support.EngineAware;
 import ths.template.support.Translator;
 import ths.template.support.translators.expression.ExpressionImpl;
@@ -22,7 +22,7 @@ import ths.template.util.StringUtils;
  * 
  * @author Liang Fei (liangfei0201 AT gmail DOT com)
  */
-public class DfaTranslator implements Translator, Configurable<TemplateConfiguration>, EngineAware {
+public class DfaTranslator implements Translator, Configurable<Configs>, EngineAware {
     
     private Engine engine;
 
@@ -33,7 +33,7 @@ public class DfaTranslator implements Translator, Configurable<TemplateConfigura
     }
     
     @Override
-    public void configure(TemplateConfiguration config) {
+    public void configure(Configs config) {
         String packages = config.getImportPackages(); 
         this.importPackages = packages.trim().split("\\s*\\,\\s*");
     }

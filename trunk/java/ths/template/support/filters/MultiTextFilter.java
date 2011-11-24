@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
 import ths.core.Configurable;
-import ths.template.TemplateConfiguration;
+import ths.template.Configs;
 import ths.template.support.Filter;
 import ths.template.util.ClassUtils;
 
@@ -15,13 +15,13 @@ import ths.template.util.ClassUtils;
  * 
  * @author Liang Fei (liangfei0201 AT gmail DOT com)
  */
-public class MultiTextFilter implements Filter, Configurable<TemplateConfiguration> {
+public class MultiTextFilter implements Filter, Configurable<Configs> {
     
     private final List<Filter> templateFilters = new CopyOnWriteArrayList<Filter>();
     
     @Override
     @SuppressWarnings("unchecked")
-    public void configure(TemplateConfiguration config) {
+    public void configure(Configs config) {
         String value = config.getTextFilters();
         
         if (value != null && value.trim().length() > 0) {
@@ -30,7 +30,7 @@ public class MultiTextFilter implements Filter, Configurable<TemplateConfigurati
             for (int i = 0; i < values.length; i ++) {
                 filters[i] = (Filter) ClassUtils.newInstance(values[i]);
                 if (filters[i] instanceof Configurable) {
-                    ((Configurable<TemplateConfiguration>)filters[i]).configure(config);
+                    ((Configurable<Configs>)filters[i]).configure(config);
                 }
             }
             add(filters);

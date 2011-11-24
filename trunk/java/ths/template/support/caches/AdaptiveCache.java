@@ -1,7 +1,7 @@
 package ths.template.support.caches;
 
 import ths.core.Configurable;
-import ths.template.TemplateConfiguration;
+import ths.template.Configs;
 import ths.template.support.Cache;
 
 /**
@@ -11,13 +11,13 @@ import ths.template.support.Cache;
  * 
  * @author Liang Fei (liangfei0201 AT gmail DOT com)
  */
-public class AdaptiveCache implements Cache, Configurable<TemplateConfiguration> {
+public class AdaptiveCache implements Cache, Configurable<Configs> {
     
     private Cache cache;
     
 	@Override
 	@SuppressWarnings("unchecked")
-    public void configure(TemplateConfiguration config) {
+    public void configure(Configs config) {
         String capacity = config.getCacheCapacity();
         
         if (capacity != null && capacity.trim().length() > 0 && Integer.parseInt(capacity.trim()) > 0) {
@@ -26,7 +26,7 @@ public class AdaptiveCache implements Cache, Configurable<TemplateConfiguration>
             cache = new StrongCache();
         }
         if (cache instanceof Configurable) {
-            ((Configurable<TemplateConfiguration>)cache).configure(config);
+            ((Configurable<Configs>)cache).configure(config);
         }
     }
 

@@ -8,7 +8,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import ths.core.Configurable;
-import ths.template.TemplateConfiguration;
+import ths.template.Configs;
 import ths.template.support.Compiler;
 import ths.template.util.ClassUtils;
 
@@ -17,7 +17,7 @@ import ths.template.util.ClassUtils;
  * 
  * @author Liang Fei (liangfei0201 AT gmail DOT com)
  */
-public abstract class AbstractCompiler implements Compiler, Configurable<TemplateConfiguration> {
+public abstract class AbstractCompiler implements Compiler, Configurable<Configs> {
     
     private static final Pattern PACKAGE_PATTERN = Pattern.compile("package\\s+([_a-zA-Z][_a-zA-Z0-9\\.]*);");
     
@@ -26,7 +26,7 @@ public abstract class AbstractCompiler implements Compiler, Configurable<Templat
     private File compileDirectory;
     
     @Override
-    public void configure(TemplateConfiguration config) {
+    public void configure(Configs config) {
         String directory = config.getCompileDirectory();
         
         if (directory != null && directory.trim().length() > 0) {

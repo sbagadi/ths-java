@@ -20,7 +20,7 @@ import java.util.regex.Pattern;
 
 import ths.core.Resource;
 import ths.core.Configurable;
-import ths.template.TemplateConfiguration;
+import ths.template.Configs;
 import ths.template.Engine;
 import ths.template.Template;
 import ths.template.Expression;
@@ -47,7 +47,7 @@ import ths.template.util.UnsafeStringWriter;
  * 
  * @author Liang Fei (liangfei0201 AT gmail DOT com)
  */
-public abstract class AbstractParser implements Parser, Configurable<TemplateConfiguration>, EngineAware {
+public abstract class AbstractParser implements Parser, Configurable<Configs>, EngineAware {
     
     protected static final char SPECIAL = '\27';
 
@@ -144,7 +144,7 @@ public abstract class AbstractParser implements Parser, Configurable<TemplateCon
     }
     
     @Override
-    public void configure(TemplateConfiguration config) {
+    public void configure(Configs config) {
    
         String output = config.getOutputStream();
         String namespace = config.getAttributeNamespace();
