@@ -49,6 +49,7 @@ public class ActionDispatcherFilter implements Filter {
 			response.sendError(HttpServletResponse.SC_NOT_FOUND);
 		} catch (Exception e) {
 			logger.warn("Action [{}] runtime error:", e.getMessage());
+			e.printStackTrace();
 			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 		}
 	}
