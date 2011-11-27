@@ -1,8 +1,9 @@
 package ths.core.loaders;
 
 import java.io.File;
-import java.io.FileReader;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.Reader;
 
 import ths.core.Loader;
@@ -34,7 +35,7 @@ public class FileResource extends AbstractResource {
     }
 
     public Reader getReader() throws IOException {
-        return new FileReader(file);
+        return new InputStreamReader(new FileInputStream(file), this.getEncoding());
     }
     
 }

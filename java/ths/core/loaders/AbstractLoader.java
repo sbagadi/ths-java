@@ -41,6 +41,12 @@ public abstract class AbstractLoader implements Loader, Configurable<LoaderConfi
         }
     }
     
+    public void setConfigDirectory(String dir) {
+    	if (dir != null && dir.length() > 0) {
+    		this.directory = dir;
+    	}
+    }
+    
     public List<String> list() throws IOException {
         String directory = this.directory;
         if (directory == null || directory.length() == 0) {
