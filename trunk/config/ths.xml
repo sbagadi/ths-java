@@ -12,7 +12,23 @@
     		<value>/WEB-INF/global.properties</value>
 		</property>
 	</bean>
-	
+	<bean id="dataSource-mysql" class="com.alibaba.druid.pool.DruidDataSource" destroy-method="close">
+	    <property name="url">
+	        <value>jdbc:mysql://192.168.1.100/web_mall</value>
+	    </property>
+	    <property name="username">
+	        <value>root</value>
+	    </property>
+	    <property name="password">
+	        <value>159753</value>
+	    </property>
+	    <property name="initialSize">
+	        <value>1</value>
+	    </property>
+	    <property name="maxActive">
+	        <value>20</value>
+	    </property>
+	</bean>	
 	<services:checker type="hibernate3" name="Tom" age="28" xmlns="http://www.99buy.com.cn/schema/services">
 		<include method="GET" />
 		<include method="POST" />

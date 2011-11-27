@@ -1,4 +1,4 @@
-<!--#define(User user, Book[] books)--><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--#define(User user, Book[] books, Goods[] GoodsList)--><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -795,6 +795,16 @@ loader.load({url:'module!jquery', charset:'utf-8'}, function(){
   </div>
   
 </div>
+<div style="margin: 0 auto; width:970px;">
+<table>
+  <!--#foreach(goods in GoodsList)--><tr>
+	<td>${goods.id}</td>
+	<td>${goods.name}</td>
+	<td>${goods.price}</td>
+  </tr><!--#end-->
+</table>	
+</div>
+
 ${user.name}/${user.role}<br/>
 <!--#if(user.role == 'admin')--><table>
   <tr>
