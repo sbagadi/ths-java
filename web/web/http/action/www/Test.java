@@ -48,10 +48,10 @@ public class Test extends AbstractHttpAction {
 		}
 		
 		int index = 0;
-		Goods[] goodsList = new Goods[2];
+		HashSet<Goods> goodsList = new HashSet<Goods>();
         ResultSet rs = stmt.executeQuery("SELECT * FROM web_goods");
         while (rs.next()) {
-        	goodsList[index] = new Goods(rs.getInt(1), rs.getString(2), rs.getFloat(3));
+        	goodsList.add(new Goods(rs.getInt(1), rs.getString(2), rs.getFloat(3)));
         	index++;
         }
         rs.close();
