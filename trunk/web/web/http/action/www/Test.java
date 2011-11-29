@@ -5,7 +5,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
@@ -48,7 +48,7 @@ public class Test extends AbstractHttpAction {
 		}
 		
 		int index = 0;
-		HashSet<Goods> goodsList = new HashSet<Goods>();
+		ArrayList<Goods> goodsList = new ArrayList<Goods>();
         ResultSet rs = stmt.executeQuery("SELECT * FROM web_goods");
         while (rs.next()) {
         	goodsList.add(new Goods(rs.getInt(1), rs.getString(2), rs.getFloat(3)));
