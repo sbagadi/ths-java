@@ -37,6 +37,10 @@ public abstract class AbstractHttpAction {
 		return obj;
 	}
 	
+	protected Object getDatabaseMapper(Class<?> clazz) {
+		return app.getBean(clazz);
+	}
+	
 	public final void setRequestAndResponse(HttpServletRequest req, HttpServletResponse res) {
 		request = req;
 		response = res;

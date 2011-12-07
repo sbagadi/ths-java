@@ -1,0 +1,6 @@
+    <!--JDBC Transaction  Manage -->  
+    <bean id="dataSourceProxy" class="org.springframework.jdbc.datasource.TransactionAwareDataSourceProxy">  
+        <constructor-arg>  
+            <ref bean="dataSource" />  
+        </constructor-arg>  
+    </bean> 

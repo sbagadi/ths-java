@@ -1,4 +1,4 @@
-<!--#define(User user, Book[] books, ArrayList<Goods> GoodsList)--><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!--#define(List<Goods> GoodsList)--><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
@@ -804,40 +804,7 @@ loader.load({url:'module!jquery', charset:'utf-8'}, function(){
   </tr><!--#end-->
 </table>	
 </div>
-
-${user.name}/${user.role}<br/>
-<!--#if(user.role == 'admin')--><table>
-  <tr>
-    <th>NO.</th>
-    <th>Title</th>
-    <th>Author</th>
-    <th>Publisher</th>
-    <th>PublicationDate</th>
-    <th>Price</th>
-    <th>DiscountPercent</th>
-    <th>DiscountPrice</th>
-  </tr>
-  <!--#foreach(book in books)--><!--#if(book.price > 0)--><tr>
-    <td>${foreach.count}</td>
-    <td>${book.title}</td>
-    <td style="color:red;">${book.author}</td>
-    <td>${book.publisher}</td>
-    <td>${book.publication}</td>
-    <td>${book.price}</td>
-    <td>${book.discount}%</td>
-    <td>${book.price * book.discount / 100}</td>
-  </tr><!--#end--><!--#end-->
-</table>
-<!--#elseif(user)--><table>
-  <tr>
-    <td>No privilege.</td>
-  </tr>
-</table>
-<!--#else--><table>
-  <tr>
-    <td>No login.</td>
-  </tr>
-</table><!--#end-->
+gg
 <br />
 <br />
 <textarea name="textarea" id="div-debug" cols="45" rows="5"></textarea>
