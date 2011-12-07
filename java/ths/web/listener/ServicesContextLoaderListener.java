@@ -24,6 +24,7 @@ public class ServicesContextLoaderListener extends ServicesContextLoader impleme
 		cleanupAttributes(event.getServletContext());		
 	}
 	
+	@SuppressWarnings("unchecked")
 	private void cleanupAttributes(ServletContext sc) {
 		Enumeration<String> attrNames = sc.getAttributeNames();
 		while (attrNames.hasMoreElements()) {

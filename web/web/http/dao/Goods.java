@@ -1,16 +1,15 @@
-package web.http.model;
+package web.http.dao;
 
-public class Goods {
+import java.io.Serializable;
+
+public class Goods implements Serializable {
+	
+	private static final long serialVersionUID = 2594174257073442291L;
+	
 	private int id;
 	private String name;
 	private float price;
 	
-	public Goods(int id, String name, float price) {
-		this.id = id;
-		this.name = name;
-		this.price = price;
-	}
-
 	public int getId() {
 		return id;
 	}
