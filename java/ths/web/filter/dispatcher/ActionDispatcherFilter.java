@@ -15,14 +15,13 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ths.web.AbstractHttpAction;
+import ths.web.AbstractAction;
 import ths.web.ActionController;
-import ths.web.ActionObjectPool;
-
+import ths.web.ActionUrl;
 
 public class ActionDispatcherFilter implements Filter {
 	private static final Logger logger = LoggerFactory.getLogger(ActionDispatcherFilter.class);
-	private static final ActionObjectPool pool = new ActionObjectPool();
+	private static final ActionController controller = new ActionController();
 	private ServletContext sc;
 	
 	@Override
@@ -35,17 +34,16 @@ public class ActionDispatcherFilter implements Filter {
 	public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
-
-		String className = ActionController.getActionClassName(request);
+        
+        ActionUrl ac = controller.getActionUrl(request);
 		try {
-		
-			AbstractHttpAction action = pool.getInstance(className);
+			AbstractAction action = controller.getInstance(ac);
 			action.setRequestAndResponse(request, response);
 			action.setServletContext(sc);
 			action.setHtmlHeader();
 			action.execute();
 		} catch (ClassNotFoundException e) {
-			logger.warn("Action class [{}] is not found.", className);
+			logger.warn("Action class [{}] is not found.", ac.getActionClassName());
 			response.sendError(HttpServletResponse.SC_NOT_FOUND);
 		} catch (Exception e) {
 			logger.warn("Action [{}] runtime error:", e.getMessage());

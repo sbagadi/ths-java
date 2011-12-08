@@ -1,4 +1,4 @@
-package ths.web.base;
+package ths.web;
 
 import ths.commons.util.StringUtils;
 
@@ -12,9 +12,11 @@ public class ActionUrl {
 	private String serverName;
 	private String host;
 	private String actionKey;	
+	private String actionPrefix;
 	
-	public ActionUrl(String requestUrl, String serverName) {
+	public ActionUrl(String requestUrl, String serverName, String prefix) {
 		this.host = "www";
+		this.actionPrefix = prefix;
 		this.requestUrl = StringUtils.trimToEmpty(requestUrl);
 		this.serverName = StringUtils.trimToEmpty(serverName);
 	}
@@ -73,7 +75,7 @@ public class ActionUrl {
 		return actionKey;
 	}
 	
-	public String getActionClassName(String prefix) {
-		return prefix + actionKey;
+	public String getActionClassName() {
+		return actionPrefix + actionKey;
 	}
 }
