@@ -48,6 +48,7 @@ public class ActionDispatcherFilter implements Filter {
 		} catch (Exception e) {
 			logger.warn("Action [{}] runtime error:", e.getMessage());
 			e.printStackTrace();
+			System.out.println(ac.getActionClassName());
 			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 		}
 	}

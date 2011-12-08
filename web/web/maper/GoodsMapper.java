@@ -1,8 +1,8 @@
-package web.http.maper;
+package web.maper;
 
 import java.util.List;
 
-import web.http.dao.Goods;
+import web.dao.Goods;
 
 public interface GoodsMapper {
 	List<Goods> getGoodsByCategoryId(int categoryId);

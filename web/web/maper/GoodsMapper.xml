@@ -2,9 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="web.http.maper.GoodsMapper">
+<mapper namespace="web.maper.GoodsMapper">
 
-  <select id="getGoodsByCategoryId" parameterType="int" resultType="web.http.dao.Goods">
+  <select id="getGoodsByCategoryId" parameterType="int" resultType="web.dao.Goods">
     SELECT
 	goods_id as id,
 	goods_name as name,

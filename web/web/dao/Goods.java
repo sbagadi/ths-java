@@ -1,4 +1,4 @@
-package web.http.dao;
+package web.dao;
 
 import java.io.Serializable;
 
