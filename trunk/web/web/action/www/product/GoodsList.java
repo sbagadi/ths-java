@@ -21,6 +21,13 @@ public class GoodsList extends AbstractAction {
 		GoodsMapper goodsMapper = (GoodsMapper)this.getDatabaseMapper(GoodsMapper.class);
 		List<Goods> goodsList = goodsMapper.getGoodsByCategoryId(1);
 		
+		int haseCode = 0;
+		String productName = this.request.getParameter("product_name");
+		if (productName != null) {
+			haseCode = productName.hashCode();
+		}
+		System.out.println(haseCode);
+		
 		Map<String, Object> context = new HashMap<String, Object>();
 		context.put("GoodsList", goodsList);
 		engine.getTemplate("/themes/en/goods-detail.html").render(context, out);

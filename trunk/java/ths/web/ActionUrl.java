@@ -23,9 +23,7 @@ public class ActionUrl {
 	
 	public void parse() {
 		this.parseHost();
-		this.parseActionKey();
-		System.out.println(this.requestUrl);
-		
+		this.parseActionKey();	
 	}
 	
 	private void parseHost() {
