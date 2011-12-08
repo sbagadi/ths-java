@@ -24,6 +24,8 @@ public class ActionUrl {
 	public void parse() {
 		this.parseHost();
 		this.parseActionKey();
+		System.out.println(this.requestUrl);
+		
 	}
 	
 	private void parseHost() {
@@ -44,9 +46,10 @@ public class ActionUrl {
 	private void parseActionKey() {
 		boolean hasUpper = false;
 	    int length = host.length() + 1 + requestUrl.length();
-	    
+	    int lastIndex = requestUrl.lastIndexOf(URL_SPLIT);
+
 	    StringBuilder buffer = new StringBuilder(length);
-	    buffer.append(host).append(POINT);
+	    buffer.append(host);
 	    for (int index = 0; index < length; index++) {
 			char ch = requestUrl.charAt(index);
 			if (ch == POINT) {
@@ -57,7 +60,7 @@ public class ActionUrl {
 				hasUpper = true;
 			} else if (ch == URL_SPLIT) {
 				buffer.append(POINT);
-				hasUpper = true;
+				if (index == lastIndex) hasUpper = true;
 			} else {
 				if (hasUpper) {
 					buffer.append(Character.toUpperCase(ch));

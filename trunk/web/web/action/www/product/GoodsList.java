@@ -1,4 +1,4 @@
-package web.http.action.www;
+package web.action.www.product;
 
 import java.util.HashMap;
 import java.util.List;
@@ -6,11 +6,11 @@ import java.util.Map;
 
 import ths.core.loaders.AbstractLoader;
 import ths.template.Engine;
-import ths.web.AbstractHttpAction;
-import web.http.dao.Goods;
-import web.http.maper.GoodsMapper;
+import ths.web.AbstractAction;
+import web.dao.Goods;
+import web.maper.GoodsMapper;
 
-public class GoodsList extends AbstractHttpAction {
+public class GoodsList extends AbstractAction {
 
 	@Override
 	protected void service() throws Exception {

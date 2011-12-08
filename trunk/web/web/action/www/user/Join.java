@@ -1,4 +1,4 @@
-package web.http.action.www.captcha;
+package web.action.www.user;
 
 import java.awt.image.BufferedImage;
 import java.io.OutputStream;
@@ -6,9 +6,9 @@ import javax.imageio.ImageIO;
 import javax.servlet.http.HttpSession;
 
 import ths.core.graphics.Captcha;
-import ths.web.AbstractHttpAction;
+import ths.web.AbstractAction;
 
-public class Join extends AbstractHttpAction {
+public class Join extends AbstractAction {
 	
 	@Override
 	protected void service() throws Exception {
