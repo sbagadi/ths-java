@@ -12,12 +12,12 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
-public abstract class AbstractHttpAction {
+public abstract class AbstractAction {
 	
 	protected HttpServletRequest request;
 	protected HttpServletResponse response;
-	protected PrintWriter out;
 	protected ServletContext servletContext;
+	protected PrintWriter out;
 	private ApplicationContext app;
 	private String actionType = "html";
 	
