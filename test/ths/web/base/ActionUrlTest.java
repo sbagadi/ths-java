@@ -11,7 +11,6 @@ public class ActionUrlTest {
 	@Test
 	public void testGetClassName() {
 		ActionUrl ac = new ActionUrl("product/goods_detail.htm", "127.0.0.1", "web.action.");
-		ac.parse();
 
 		String className = ac.getActionClassName();
 		System.out.println(className);
