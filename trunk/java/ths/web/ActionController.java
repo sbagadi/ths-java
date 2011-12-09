@@ -13,7 +13,6 @@ public class ActionController {
 
 	public ActionUrl getActionUrl(HttpServletRequest request) {
 		ActionUrl ac = new ActionUrl(request.getRequestURI(), request.getServerName(), actionClassNamePrefix);
-		ac.parse();
 		return ac;
 	}
 	

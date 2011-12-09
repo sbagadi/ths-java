@@ -19,9 +19,11 @@ public class ActionUrl {
 		this.actionPrefix = prefix;
 		this.requestUrl = StringUtils.trimToEmpty(requestUrl);
 		this.serverName = StringUtils.trimToEmpty(serverName);
+		
+		this.parse();
 	}
 	
-	public void parse() {
+	private void parse() {
 		this.parseHost();
 		this.parseActionKey();	
 	}
