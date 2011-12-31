@@ -9,88 +9,103 @@ import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.image.BufferedImage;
 
-public class Captcha
-{
+public class Captcha {
 	private Random random;
 	private int imgWidth;
 	private int imgHeight;
 	private boolean useDisturbLine;
-	
-	public Captcha()
-	{
+
+	private static final Integer MIN_FONT_SIZE = 16;// 验证码最小字体
+
+	// 验证码随机字体
+	private static final Font[] RANDOM_FONT = new Font[] {
+			new Font("nyala", Font.BOLD, MIN_FONT_SIZE),
+			new Font("Arial", Font.BOLD, MIN_FONT_SIZE),
+			new Font("Bell MT", Font.BOLD, MIN_FONT_SIZE),
+			new Font("Credit valley", Font.BOLD, MIN_FONT_SIZE),
+			new Font("Impact", Font.BOLD, MIN_FONT_SIZE) 
+	};
+
+	// 验证码随机颜色
+	private static final Color[] RANDOM_COLOR = new Color[] { 
+			Color.RED,
+			Color.GREEN,
+			Color.BLUE,
+			new Color(255, 255, 255),
+			new Color(255, 220, 220), 
+			new Color(220, 255, 255),
+			new Color(220, 220, 255), 
+			new Color(255, 255, 220),
+			new Color(220, 255, 220) 
+	};
+
+	public Captcha() {
 		this.random = new Random();
 		this.imgWidth = 100;
 		this.imgHeight = 40;
 		this.useDisturbLine = false;
 	}
-	
-	public void setImageSize(int width, int height)
-	{
+
+	public void setImageSize(int width, int height) {
 		this.imgWidth = width;
 		this.imgHeight = height;
 	}
-	
-	public void setDrawDisturbLine(boolean isDraw)
-	{
+
+	public void setDrawDisturbLine(boolean isDraw) {
 		this.useDisturbLine = isDraw;
 	}
-	
-	public String getRandString(int length)
-	{
-		//char[] chars = "abcdefghijkmnpqrstuvwxyz23456789".toCharArray();
+
+	public String getRandString(int length) {
+		// char[] chars = "abcdefghijkmnpqrstuvwxyz23456789".toCharArray();
 		char[] chars = "ABCDEFGHJKMNPQRSTUVWXYZ23456789".toCharArray();
 		char[] buf = new char[length];
-		
-		for(int i=0; i<length; i++)
-		{
+
+		for (int i = 0; i < length; i++) {
 			buf[i] = chars[random.nextInt(chars.length)];
 		}
-		
+
 		return new String(buf);
 	}
-	
-	public BufferedImage getImage(String words)
-	{
-		Color fontColor = getRandomFontColor();
-			
+
+	public BufferedImage getImage(String words) {
+		Font font = getRandomFont();
+		Color color = getRandomColor();
+
 		BufferedImage image = new BufferedImage(imgWidth, imgHeight, BufferedImage.TYPE_INT_ARGB);
-		Graphics2D graph = (Graphics2D)image.getGraphics();
-		
+		Graphics2D graph = (Graphics2D) image.getGraphics();
+
 		RenderingHints hints = new RenderingHints(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 		hints.add(new RenderingHints(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY));
 		graph.setRenderingHints(hints);
-		
-		graph.setColor(Color.WHITE);   
+
+		graph.setColor(Color.WHITE);
 		graph.fillRect(0, 0, imgWidth, imgHeight);
-		
-		graph.setFont(new Font("Arial", Font.PLAIN, 30));
-		graph.setColor(fontColor);
+
+		graph.setFont(font);
+		graph.setColor(color);
 		graph.drawString(words, 10, 30);
 
-		int randHeight = random.nextInt(imgHeight/2)+(imgHeight/4);
+		int randHeight = random.nextInt(imgHeight / 2) + (imgHeight / 4);
 		if (this.useDisturbLine) {
-			drawDisturbLine(graph, 2, randHeight, imgWidth-2, randHeight, 1, fontColor);
+			drawDisturbLine(graph, 2, randHeight, imgWidth - 2, randHeight, 1, color);
 		}
 		contort(graph, imgWidth, imgHeight, Color.WHITE);
-		
+
 		graph.dispose();
 		return image;
 	}
-	
-	private void contort(Graphics g, int w1, int h1, Color color) 
-	{
+
+	private void contort(Graphics g, int w1, int h1, Color color) {
 		shearX(g, w1, h1, color);
 		shearY(g, w1, h1, color);
 	}
 
-	private void shearX(Graphics g, int w1, int h1, Color color) 
-	{
-		int period = random.nextInt(2);
-
+	private void shearX(Graphics g, int w1, int h1, Color color) {
 		boolean borderGap = true;
 		int frames = 1;
 		int phase = random.nextInt(2);
-
+		int period = random.nextInt(2);
+		
 		for (int i = 0; i < h1; i++) {
 			double d = (double) (period >> 1)
 					* Math.sin((double) i / (double) period
@@ -105,8 +120,7 @@ public class Captcha
 		}
 	}
 
-	private void shearY(Graphics g, int w1, int h1, Color color) 
-	{
+	private void shearY(Graphics g, int w1, int h1, Color color) {
 		int period = random.nextInt(4) + 6; // 50;
 
 		boolean borderGap = true;
@@ -125,20 +139,20 @@ public class Captcha
 			}
 		}
 	}
-	
-	private void drawDisturbLine(Graphics g, int x1, int y1, int x2, int y2, int thickness, Color c) 
-	{
+
+	private void drawDisturbLine(Graphics g, int x1, int y1, int x2, int y2, int thickness, Color c) {
 
 		// The thick line is in fact a filled polygon
 		g.setColor(c);
 		int dX = x2 - x1;
 		int dY = y2 - y1;
-		
+
 		// line length
 		double lineLength = Math.sqrt(dX * dX + dY * dY);
 		double scale = (double) (thickness) / (2 * lineLength);
 
-		// The x and y increments from an endpoint needed to create a rectangle...
+		// The x and y increments from an endpoint needed to create a
+		// rectangle...
 		double ddx = -scale * (double) dY;
 		double ddy = scale * (double) dX;
 		ddx += (ddx > 0) ? 0.5 : -0.5;
@@ -160,12 +174,13 @@ public class Captcha
 		yPoints[3] = y2 + dy;
 
 		g.fillPolygon(xPoints, yPoints, 4);
-	}	
-	
-	private Color getRandomFontColor()
-	{
-		Color[] colors = {Color.RED, Color.GREEN, Color.BLUE};
-		return colors[random.nextInt(colors.length)];
-	}	
-	
+	}
+
+	private Font getRandomFont() {
+		return RANDOM_FONT[random.nextInt(RANDOM_FONT.length)];
+	}
+
+	private Color getRandomColor() {
+		return RANDOM_COLOR[random.nextInt(RANDOM_COLOR.length)];
+	}
 }
